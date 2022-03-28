@@ -83,7 +83,7 @@ const SignInSide = () => {
                         style={{ fontSize: "420px", lineHeight: "420px" }}
                         className="font-extrabold text-transparent bg-clip-text bg-gradient-to-l from-indigo-300 to-purple-800"
                     >
-                        Luka here
+                        DCMS
                     </h1>
                 </Grid>
                 <Grid
