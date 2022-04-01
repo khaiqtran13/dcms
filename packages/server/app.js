@@ -17,31 +17,9 @@ app.get("/user", (req, res) => {
     client.query("SELECT * FROM public.user", (err, results) => {
         if (!err) {
             res.send(results.rows);
-        }
-        else{
-            res.send(err)
+        } else {
+            res.send(err);
         }
     });
     client.end;
 });
-
-// // middleware
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
-
-// app.get(
-//     "/",
-//     async (req: Express.Request, res: Express.Response): Promise<Response> => {
-//         return res.status(200).send({
-//             message: "Hello World!",
-//         });
-//     },
-// );
-
-// try {
-//     app.listen(port, (): void => {
-//         console.log(`Connected successfully on port ${port}`);
-//     });
-// } catch (error) {
-//     console.error(`Error occured:`);
-// }
