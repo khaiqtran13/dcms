@@ -13,10 +13,13 @@ app.listen(8000, () => {
 
 client.connect();
 
-app.get("/employees", (req, res) => {
-    client.query("Select * FROM EMPLOYEES", (err, results) => {
+app.get("/user", (req, res) => {
+    client.query("SELECT * FROM public.user", (err, results) => {
         if (!err) {
             res.send(results.rows);
+        }
+        else{
+            res.send(err)
         }
     });
     client.end;
