@@ -11,6 +11,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import axios, { AxiosError, AxiosResponse } from "axios";
 
 function Copyright(props: any) {
     return (
@@ -32,7 +33,7 @@ function Copyright(props: any) {
 
 const theme = createTheme();
 
-export default function SignInSide() {
+const SignInSide = () => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -41,6 +42,30 @@ export default function SignInSide() {
             email: data.get("email"),
             password: data.get("password"),
         });
+    };
+
+    const [email, setEmail] = React.useState<string>("");
+    const [password, setPassword] = React.useState<string>("");
+
+    const login = async (event: any) => {
+        event.preventDefault();
+        event.stopPropogation();
+
+        axios({
+            method: "post",
+            // TODO: implement backend login
+            url: "/api/login",
+            data: {
+                email: email,
+                password: password,
+            },
+        })
+            .then((response: AxiosResponse) => {
+                // TODO update app context
+            })
+            .catch((error: AxiosError<string>) => {
+                console.log(error.response?.data);
+            });
     };
 
     return (
@@ -99,6 +124,9 @@ export default function SignInSide() {
                                 name="email"
                                 autoComplete="email"
                                 autoFocus
+                                onChange={(event) =>
+                                    setEmail(event.target.value)
+                                }
                             />
                             <TextField
                                 margin="normal"
@@ -109,6 +137,9 @@ export default function SignInSide() {
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
+                                onChange={(event) =>
+                                    setPassword(event.target.value)
+                                }
                             />
                             <FormControlLabel
                                 control={
@@ -124,6 +155,7 @@ export default function SignInSide() {
                                 fullWidth
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
+                                onSubmit={login}
                             >
                                 Sign In
                             </Button>
@@ -146,4 +178,6 @@ export default function SignInSide() {
             </Grid>
         </ThemeProvider>
     );
-}
+};
+
+export default SignInSide;
