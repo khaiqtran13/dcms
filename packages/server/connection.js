@@ -7,6 +7,10 @@ const client = new Client({
     password:
         "bebb014e18df1bd9c0f6bd949264f9c0e3b0a978aa3849c3028fee5ab8fa2279",
     database: "dabna7dvuqs2bq",
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false,
+    },
 });
 
 module.exports = client;
