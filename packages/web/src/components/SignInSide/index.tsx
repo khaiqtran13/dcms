@@ -47,13 +47,25 @@ const SignInSide = () => {
     const [email, setEmail] = React.useState<string>("");
     const [password, setPassword] = React.useState<string>("");
 
+    const getMoney = async () => {
+        axios({
+            method: "GET",
+            url: "http://localhost:8000/user",
+        })
+            .then((response: any) => {
+                console.log("response:" + response.data);
+            })
+            .catch((error: AxiosError<any>) => {
+                console.error(error);
+            });
+    };
+
     const login = async (event: any) => {
         event.preventDefault();
         event.stopPropogation();
 
         axios({
             method: "post",
-            // TODO: implement backend login
             url: "/api/login",
             data: {
                 email: email,
@@ -155,7 +167,7 @@ const SignInSide = () => {
                                 fullWidth
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
-                                onSubmit={login}
+                                onClick={() => getMoney()}
                             >
                                 Sign In
                             </Button>
