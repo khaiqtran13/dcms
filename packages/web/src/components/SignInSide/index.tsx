@@ -42,23 +42,15 @@ const SignInSide = () => {
     const [email, setEmail] = React.useState<string>("");
     const [password, setPassword] = React.useState<string>("");
 
-    const getUser = async () => {
-        axios({
-            method: "GET",
-            url: "http://localhost:8000/user",
-        })
-            .then((response: any) => {
-                console.log("response:" + response.data);
-            })
-            .catch((error: AxiosError<any>) => {
-                console.error(error);
-            });
-    };
-
+    const user_id = 1000000; // testing
     const login = async () => {
         axios({
-            method: "post",
-            url: "http://localhost:8000/user",
+            method: "GET",
+            url: `http://localhost:8000/api/user/${user_id}`,
+            // data: {
+            //     email: email,
+            //     password: password,
+            // },
             data: {
                 user_id: user_id,
             },
