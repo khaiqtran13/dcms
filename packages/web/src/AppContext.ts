@@ -1,10 +1,9 @@
 import React from "react";
-
+import { IUser } from "../../server/src/database/user.types";
 export interface IAppContext {
     loggedin: boolean;
 
-    // user?: any;
-    // TODO: USER TYPE FIX ^^^
+    user?: IUser;
 }
 
 export const AppContext = React.createContext<IAppContext | null>(null);
