@@ -7,6 +7,7 @@ const app = express();
 const cors = require("cors");
 
 // settings
+app.use(cors());
 app.options("http://localhost:3000", cors());
 app.use(express.json());
 
