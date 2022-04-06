@@ -3,7 +3,7 @@
     "version": "0.0.0",
     "private": true,
     "scripts": {
-        "start": "ts-node-dev ./app.js"
+        "start": "ts-node-dev ./app.ts"
     },
     "dependencies": {
         "body-parser": "^1.20.0",
