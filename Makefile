@@ -1,4 +1,3 @@
-
 chetan-server:
 	code .;cd packages/server; npm install; npm start
 
