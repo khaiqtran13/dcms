@@ -1,5 +1,4 @@
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -37,17 +36,13 @@ const SignInSide = () => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        // eslint-disable-next-line no-console
-        console.log({
-            email: data.get("email"),
-            password: data.get("password"),
-        });
+        login();
     };
 
     const [email, setEmail] = React.useState<string>("");
     const [password, setPassword] = React.useState<string>("");
 
-    const getMoney = async () => {
+    const getUser = async () => {
         axios({
             method: "GET",
             url: "http://localhost:8000/user",
@@ -60,20 +55,17 @@ const SignInSide = () => {
             });
     };
 
-    const login = async (event: any) => {
-        event.preventDefault();
-        event.stopPropogation();
-
+    const login = async () => {
         axios({
             method: "post",
-            url: "/api/login",
+            url: "http://localhost:8000/user",
             data: {
                 email: email,
                 password: password,
             },
         })
             .then((response: AxiosResponse) => {
-                // TODO update app context
+                console.log(response.data);
             })
             .catch((error: AxiosError<string>) => {
                 console.log(error.response?.data);
@@ -167,7 +159,7 @@ const SignInSide = () => {
                                 fullWidth
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
-                                onClick={() => getMoney()}
+                                // onClick={() => login}
                             >
                                 Sign In
                             </Button>
