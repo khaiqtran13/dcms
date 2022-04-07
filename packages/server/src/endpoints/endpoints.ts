@@ -1,4 +1,3 @@
-import { IntegerDataType } from "sequelize/types";
 import client from "../../connection";
 import express from "express";
 
@@ -36,13 +35,18 @@ export const getUserById = async (req: express.Request, res: any) => {
 };
 
 // takes user_id and password and autheticates user
-export const getLogin = async (req: express.Request<{ user_id:number, password:string }>, res: express.Response) => {
+export const getLogin = async (
+    req: express.Request<{ user_id: number; password: string }>,
+    res: express.Response,
+) => {
     try {
-        const { user_id, password } = req.params;
+        const { user_id, password } = req.query;
         const user = await client.query(
             `SELECT * FROM public.user WHERE user_id = ${user_id} AND password = ${password}`,
         );
-        return res.status(200).send(user);
+
+        console.log(res.status(200).send(user.rows));
+        console.log(user.rows);
         // res.json(user.rows[0]);
     } catch (err: any) {
         console.error(err.message);
@@ -50,7 +54,10 @@ export const getLogin = async (req: express.Request<{ user_id:number, password:s
 };
 
 // We are going to need to access patient data as well as edit
-export const getPatients = async (req: express.Request, res: express.Response) => {
+export const getPatients = async (
+    req: express.Request,
+    res: express.Response,
+) => {
     try {
         const patients = await client.query("SELECT * FROM public.patients");
         res.json(patients.rows);
@@ -60,7 +67,10 @@ export const getPatients = async (req: express.Request, res: express.Response) =
 };
 
 // We will need to be able to view patient's records
-export const getRecords = async (req: express.Request, res: express.Response) => {
+export const getRecords = async (
+    req: express.Request,
+    res: express.Response,
+) => {
     try {
         const records = await client.query("SELECT * FROM public.records");
         res.json(records.rows);
@@ -70,9 +80,14 @@ export const getRecords = async (req: express.Request, res: express.Response) =>
 };
 
 // We will need to be able to set and view appointments
-export const getAppointments = async (req: express.Request, res: express.Response) => {
+export const getAppointments = async (
+    req: express.Request,
+    res: express.Response,
+) => {
     try {
-        const appointments = await client.query("SELECT * FROM public.appointments");
+        const appointments = await client.query(
+            "SELECT * FROM public.appointments",
+        );
         res.json(appointments.rows);
     } catch (err: any) {
         console.error(err.message);
