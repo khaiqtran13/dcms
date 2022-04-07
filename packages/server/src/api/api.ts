@@ -1,5 +1,5 @@
 import express from "express";
-import { getUserById, getUsers } from "../endpoints/users";
+import { getAppointments, getPatients, getRecords, getUserById, getUsers } from "../endpoints/endpoints";
 
 const apiRouter = express.Router();
 
@@ -14,5 +14,8 @@ ex: apiRouter.post("/password/sendcode", isLoggedOut, requestPasswordResetCode);
 apiRouter.get("/", (req: any, res: any) => res.send(req));
 apiRouter.get("/user", getUsers);
 apiRouter.get("/user/:user_id", getUserById);
+apiRouter.get("/patients", getPatients);
+apiRouter.get("/records", getRecords);
+apiRouter.get("/appointments", getAppointments);
 
 export default apiRouter;

@@ -32,3 +32,33 @@ export const getUserById = async (req: any, res: any) => {
         console.error(err.message);
     }
 };
+
+// We are going to need to access patient data as well as edit
+export const getPatients = async (req: any, res: any) => {
+    try {
+        const patients = await client.query("SELECT * FROM public.patients");
+        res.json(patients.rows);
+    } catch (err: any) {
+        console.error(err.message);
+    }
+};
+
+// We will need to be able to view patient's records
+export const getRecords = async (req: any, res: any) => {
+    try {
+        const records = await client.query("SELECT * FROM public.records");
+        res.json(records.rows);
+    } catch (err: any) {
+        console.error(err.message);
+    }
+};
+
+// We will need to be able to set and view appointments
+export const getAppointments = async (req: any, res: any) => {
+    try {
+        const appointments = await client.query("SELECT * FROM public.appointments");
+        res.json(appointments.rows);
+    } catch (err: any) {
+        console.error(err.message);
+    }
+};
