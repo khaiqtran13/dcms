@@ -39,21 +39,21 @@ const SignInSide = () => {
         login();
     };
 
-    const [userId, setUserId] = React.useState<string>("");
+    const [userId, setUserId] = React.useState<number>(0);
     const [password, setPassword] = React.useState<string>("");
 
     const login = async () => {
         axios({
-            method: "GET",
+            method: "post",
             url: `http://localhost:8000/api/login`,
             data: {
-                user_id: userId,
-                password: password,
+                user_id: 1000004,
+                password: "password",
             },
         })
             .then((response: AxiosResponse) => {
                 // const [true, setState] = useState(initialState);
-                console.log(response.data);
+                console.log(response);
             })
             .catch((error: AxiosError<string>) => {
                 console.log(error.response?.data);
@@ -116,9 +116,9 @@ const SignInSide = () => {
                                 name="userId"
                                 autoComplete="userID"
                                 autoFocus
-                                onChange={(event) =>
-                                    setUserId(event.target.value)
-                                }
+                                // onChange={(event) =>
+                                //     setUserId(event.target.value)
+                                // }
                             />
                             <TextField
                                 margin="normal"

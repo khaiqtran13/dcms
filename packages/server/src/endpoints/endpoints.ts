@@ -44,9 +44,7 @@ export const getLogin = async (
         const user = await client.query(
             `SELECT * FROM public.user WHERE user_id = ${user_id} AND password = ${password}`,
         );
-
         console.log(res.status(200).send(user.rows));
-        console.log(user.rows);
         // res.json(user.rows[0]);
     } catch (err: any) {
         console.error(err.message);
