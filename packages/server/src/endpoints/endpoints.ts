@@ -40,11 +40,16 @@ export const getLogin = async (
     res: express.Response,
 ) => {
     try {
-        const { user_id, password } = req.query;
+        // const { user_id, password } = req.body;
+        const user_id = req.body.user_id;
+        const password = req.body.password;
+
+        console.log(user_id, password);
         const user = await client.query(
             `SELECT * FROM public.user WHERE user_id = ${user_id} AND password = ${password}`,
         );
-        console.log(res.status(200).send(user.rows));
+        console.log(user.rows);
+        console.log(res.status(200).json(user.rows));
         // res.json(user.rows[0]);
     } catch (err: any) {
         console.error(err.message);
