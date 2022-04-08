@@ -43,14 +43,13 @@ export const getLogin = async (
         // const { user_id, password } = req.body;
         const user_id = req.body.user_id;
         const password = req.body.password;
-
-        console.log(user_id, password);
+        // console.log(user_id, password);
         const user = await client.query(
             `SELECT * FROM public.user WHERE user_id = ${user_id} AND password = ${password}`,
         );
-        console.log(user.rows);
-        console.log(res.status(200).json(user.rows));
-        // res.json(user.rows[0]);
+        // console.log(user.rows);
+        // console.log(res.status(200).json(user.rows));
+        return res.status(200).json(user.rows);
     } catch (err: any) {
         console.error(err.message);
     }

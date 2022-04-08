@@ -21,8 +21,11 @@ function Copyright(props: any) {
             {...props}
         >
             {"Copyright © "}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
+            <Link
+                color="inherit"
+                href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+            >
+                DCMS
             </Link>{" "}
             {new Date().getFullYear()}
             {"."}
@@ -39,21 +42,31 @@ const SignInSide = () => {
         login();
     };
 
+    const context = React.useContext();
+
     const [userId, setUserId] = React.useState<number>(0);
     const [password, setPassword] = React.useState<string>("");
+
+    const handleNoNum = (event: any) => {
+        const re = /^[0-9\b]+$/;
+        // if value is not blank, then test the regex
+
+        if (event.target.value === "" || re.test(event.target.value)) {
+            setUserId(event.target.value);
+        }
+    };
 
     const login = async () => {
         axios({
             method: "post",
             url: `http://localhost:8000/api/login`,
             data: {
-                user_id: 1000004,
-                password: "password",
+                user_id: userId,
+                password: password,
             },
         })
             .then((response: AxiosResponse) => {
-                // const [true, setState] = useState(initialState);
-                console.log(response);
+                console.log(response.data);
             })
             .catch((error: AxiosError<string>) => {
                 console.log(error.response?.data);
@@ -111,23 +124,17 @@ const SignInSide = () => {
                                 margin="normal"
                                 required
                                 fullWidth
-                                id="user"
                                 label="User ID"
-                                name="userId"
-                                autoComplete="userID"
                                 autoFocus
-                                // onChange={(event) =>
-                                //     setUserId(event.target.value)
-                                // }
+                                type="number"
+                                onChange={(event) => handleNoNum(event)}
                             />
                             <TextField
                                 margin="normal"
                                 required
                                 fullWidth
-                                name="password"
                                 label="Password"
                                 type="password"
-                                id="password"
                                 autoComplete="current-password"
                                 onChange={(event) =>
                                     setPassword(event.target.value)
@@ -151,7 +158,7 @@ const SignInSide = () => {
                             >
                                 Sign In
                             </Button>
-                            <Grid container>
+                            {/* <Grid container>
                                 <Grid item xs>
                                     <Link href="#" variant="body2">
                                         Forgot password?
@@ -162,7 +169,7 @@ const SignInSide = () => {
                                         {"Don't have an account? Sign Up"}
                                     </Link>
                                 </Grid>
-                            </Grid>
+                            </Grid> */}
                             <Copyright sx={{ mt: 5 }} />
                         </Box>
                     </Box>
