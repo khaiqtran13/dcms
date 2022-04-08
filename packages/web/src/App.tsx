@@ -1,20 +1,27 @@
-import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
+import { IUser } from "../../server/src/database/user.types";
 import "./App.css";
+import { AppContext, IAppContext } from "./AppContext";
 import SignInSide from "./components/SignInSide";
 
 function App() {
-    const fetchUpdatedContext = async () => {
-        axios.get("/api/").then((response) => console.log(response.data));
-    };
+    const [contextUser, setContextUser] = useState<IUser | undefined>();
 
-    React.useEffect(() => {
-        fetchUpdatedContext();
-    });
+    const updateContextUser = (user: IUser) => {
+        setContextUser(user);
+        // maybe set user in cache?
+    };
+    const appContext: IAppContext = {
+        user: contextUser,
+        setUserInContext: updateContextUser,
+    };
 
     return (
         <div className="App">
-            <SignInSide />
+            {/* TODO: alerts */}
+            <AppContext.Provider value={appContext}>
+                <SignInSide />
+            </AppContext.Provider>
         </div>
     );
 }
