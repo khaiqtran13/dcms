@@ -6,7 +6,6 @@ import { AppContext, IAppContext } from "./AppContext";
 import SignInSide from "./components/SignInSide";
 import Homepage from "./components/Homepage";
 import { setUserInLocalCache, userStore } from "./localForage/users";
-import { Button } from "@mui/material";
 
 function App() {
     const [contextUser, setContextUser] = useState<IUser | undefined>();
@@ -58,7 +57,21 @@ function App() {
             });
     }, []);
 
-    if (loading) return <div></div>;
+    const darkTheme: Theme = createTheme({
+        palette: {
+            mode: "dark",
+            secondary: {
+                main: "#ff0000",
+            },
+            background: {
+                default: "#121212",
+            },
+            success: {
+                main: "#15A23A",
+            },
+        },
+    });
+    if (loading) return <ThemeProvider theme={darkTheme}></ThemeProvider>;
     return (
         <ThemeProvider theme={darkTheme}>
             {/* TODO: alerts */}
