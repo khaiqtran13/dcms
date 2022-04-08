@@ -11,6 +11,8 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios, { AxiosError, AxiosResponse } from "axios";
+import { IUser } from "../../../../server/src/database/user.types";
+import { AppContext, IAppContext } from "../../AppContext";
 
 function Copyright(props: any) {
     return (
@@ -42,8 +44,6 @@ const SignInSide = () => {
         login();
     };
 
-    const context = React.useContext();
-
     const [userId, setUserId] = React.useState<number>(0);
     const [password, setPassword] = React.useState<string>("");
 
@@ -56,6 +56,8 @@ const SignInSide = () => {
         }
     };
 
+    const context: IAppContext | null = React.useContext(AppContext);
+
     const login = async () => {
         axios({
             method: "post",
@@ -66,7 +68,10 @@ const SignInSide = () => {
             },
         })
             .then((response: AxiosResponse) => {
-                console.log(response.data);
+                const user: IUser = response.data;
+                context?.setUserInContext(user);
+                console.log(user);
+                console.log("context", context);
             })
             .catch((error: AxiosError<string>) => {
                 console.log(error.response?.data);
