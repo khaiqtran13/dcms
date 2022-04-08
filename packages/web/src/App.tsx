@@ -4,6 +4,7 @@ import { IUser } from "../../server/src/database/user.types";
 import "./App.css";
 import { AppContext, IAppContext } from "./AppContext";
 import SignInSide from "./components/SignInSide";
+import Homepage from "./components/Homepage";
 
 function App() {
     const [contextUser, setContextUser] = useState<IUser | undefined>();
@@ -36,7 +37,8 @@ function App() {
         <ThemeProvider theme={darkTheme}>
             {/* TODO: alerts */}
             <AppContext.Provider value={appContext}>
-                <SignInSide />
+                    {contextUser ? <Homepage/>  : <SignInSide /> }
+                    {/* <SignInSide/> */}
             </AppContext.Provider>
         </ThemeProvider>
     );
