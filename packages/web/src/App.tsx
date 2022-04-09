@@ -77,12 +77,7 @@ function App() {
             {/* TODO: alerts */}
 
             <AppContext.Provider value={appContext}>
-<<<<<<< HEAD
                 {contextUser ? <Homepage /> : <SignInSide />}
-=======
-                    {contextUser ? <Homepage/>  : <SignInSide /> }
-                    {/* <SignInSide/> */}
->>>>>>> 0ea3e1d (inital changes)
             </AppContext.Provider>
         </ThemeProvider>
     );
