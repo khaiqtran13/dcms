@@ -4,7 +4,7 @@ type Props = {}
 
 const PatientMain = (props: Props) => {
   return (
-    <div>hello</div>
+    <div>You are a patient</div>
   )
 }
 
