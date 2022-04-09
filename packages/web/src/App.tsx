@@ -37,8 +37,8 @@ function App() {
         <ThemeProvider theme={darkTheme}>
             {/* TODO: alerts */}
             <AppContext.Provider value={appContext}>
-                    {contextUser ? <Homepage/>  : <SignInSide /> }
-                    {/* <SignInSide/> */}
+                {contextUser ? <Homepage /> : <SignInSide />}
+                {/* <SignInSide/> */}
             </AppContext.Provider>
         </ThemeProvider>
     );

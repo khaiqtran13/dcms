@@ -1,28 +1,22 @@
+import { Button } from "@mui/material";
 import React, { useState } from "react";
-import {Routes, Route, Link} from 'react-router-dom';
-import { IUser } from "../../../../server/src/database/user.types";
-import { IAppContext } from "../../AppContext";
+import { AppContext, IAppContext } from "../../AppContext";
 
-type Props = {}
+type Props = {};
 
 const Homepage = (props: Props) => {
-  //check what type of user, load the correct comps.
-  const [contextUser, setContextUser] = useState<IUser | undefined>();
-
-    const updateContextUser = (user: IUser) => {
-        setContextUser(user);
-        // maybe set user in cache?
-    };
-    const appContext: IAppContext = {
-        user: contextUser,
-        setUserInContext: updateContextUser,
-    };
-
-    console.log(contextUser);
-
-  return (
-    <div>{contextUser?.firstname}</div>
-  )
-}
+    const context: IAppContext | null = React.useContext(AppContext);
+    return (
+        <div>
+            <Button
+                onClick={() => {
+                    console.log(context?.user);
+                }}
+            >
+                WHATS POPPING
+            </Button>
+        </div>
+    );
+};
 
 export default Homepage;
