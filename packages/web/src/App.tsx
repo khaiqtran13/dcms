@@ -72,7 +72,6 @@ function App() {
         },
     });
     if (loading) return <ThemeProvider theme={darkTheme}></ThemeProvider>;
-
     return (
         <ThemeProvider theme={darkTheme}>
             {/* TODO: alerts */}
