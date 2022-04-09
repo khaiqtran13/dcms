@@ -60,24 +60,6 @@ const SignInSide = () => {
 
     const context: IAppContext | null = React.useContext(AppContext);
 
-    React.useEffect(() => {
-        userStore
-            .keys()
-            .then(async function (keys) {
-                // An array of all the key names.
-                const cachedUser: IUser | null = await userStore.getItem(
-                    keys[0],
-                );
-                if (cachedUser) {
-                    context?.setUserInContext(cachedUser);
-                }
-            })
-            .catch(function (err) {
-                // This code runs if there were any errors
-                console.log("ah shit I broke it", err);
-            });
-    });
-
     const login = async () => {
         axios({
             method: "post",
