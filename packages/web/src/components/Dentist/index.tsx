@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import DentistHome from './DentistHome';
 
 type Props = {}
@@ -9,6 +9,7 @@ const DentistMain = (props: Props) => {
     <BrowserRouter>
       <Routes>
           <Route path="/" element={<DentistHome/>} ></Route>
+          <Route path="*" element={<Navigate to="/" replace />}/>
       </Routes>
     </BrowserRouter>
   )

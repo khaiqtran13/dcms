@@ -18,25 +18,10 @@ const Homepage = (props: Props) => {
         role = "Error";
     }
 
-    const justForShits = async () => {
-        if (context?.user) {
-            const cachedUser: IUser | null = await userStore.getItem(
-                context?.user?.user_id.toString(),
-            );
-            console.log(cachedUser);
-        }
-    };
 
     return (
         <div>
-            {/* <div>Hello {context?.user?.first_name}</div> */}
-            <Button
-                onClick={() => {
-                    justForShits();
-                }}
-            >
-                CHETAN GAY
-            </Button>
+            <div>Logged in as {context?.user?.role}</div>
             {
                 {
                     User: <PatientMain />,

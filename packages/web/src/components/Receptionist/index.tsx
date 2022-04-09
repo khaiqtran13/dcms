@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import AddPatient from './AddPatient';
 import EditPatient from './EditPatient';
 import ReceptionistHome from './ReceptionistHome';
@@ -15,6 +15,7 @@ const ReceptionistMain = (props: Props) => {
           <Route path="add" element={<AddPatient/>} ></Route>
           <Route path="edit" element={<EditPatient/>} ></Route>
           <Route path="set" element={<SetPatient/>} ></Route>
+          <Route path="*" element={<Navigate to="/" replace />}/>
       </Routes>
     </BrowserRouter>
   )
