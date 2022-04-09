@@ -68,7 +68,7 @@ const SignInSide = () => {
             },
         })
             .then((response: AxiosResponse) => {
-                const user: IUser = response.data;
+                const user: IUser = response.data[0];
                 context?.setUserInContext(user);
                 console.log(user);
                 console.log("context", context);

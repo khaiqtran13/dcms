@@ -6,15 +6,16 @@ type Props = {};
 
 const Homepage = (props: Props) => {
     const context: IAppContext | null = React.useContext(AppContext);
+
+    const role = context?.user?.role;
+
     return (
         <div>
-            <Button
-                onClick={() => {
-                    console.log(context?.user);
-                }}
-            >
-                WHATS POPPING
-            </Button>
+            {/* 
+            
+            
+            
+            */}
         </div>
     );
 };
