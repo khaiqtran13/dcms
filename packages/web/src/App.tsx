@@ -5,14 +5,16 @@ import "./App.css";
 import { AppContext, IAppContext } from "./AppContext";
 import SignInSide from "./components/SignInSide";
 import Homepage from "./components/Homepage";
+import { setUserInLocalCache } from "./localForage/users";
 
 function App() {
     const [contextUser, setContextUser] = useState<IUser | undefined>();
 
     const updateContextUser = (user: IUser) => {
         setContextUser(user);
-        // maybe set user in cache?
+        setUserInLocalCache(user);
     };
+
     const appContext: IAppContext = {
         user: contextUser,
         setUserInContext: updateContextUser,

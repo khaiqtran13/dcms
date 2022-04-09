@@ -13,6 +13,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { IUser } from "../../../../server/src/database/user.types";
 import { AppContext, IAppContext } from "../../AppContext";
+import { userStore } from "../../localForage/users";
+import localforage from "localforage";
 
 function Copyright(props: any) {
     return (
@@ -57,6 +59,24 @@ const SignInSide = () => {
     };
 
     const context: IAppContext | null = React.useContext(AppContext);
+
+    React.useEffect(() => {
+        userStore
+            .keys()
+            .then(async function (keys) {
+                // An array of all the key names.
+                const cachedUser: IUser | null = await userStore.getItem(
+                    keys[0],
+                );
+                if (cachedUser) {
+                    context?.setUserInContext(cachedUser);
+                }
+            })
+            .catch(function (err) {
+                // This code runs if there were any errors
+                console.log("ah shit I broke it", err);
+            });
+    });
 
     const login = async () => {
         axios({
