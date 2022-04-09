@@ -79,7 +79,8 @@ const SignInSide = () => {
     };
 
     return (
-        <ThemeProvider theme={theme}>
+        // <ThemeProvider theme={darkTheme}>
+        <div>
             <Grid container component="main" sx={{ height: "100vh" }}>
                 <CssBaseline />
                 <Grid
@@ -180,7 +181,8 @@ const SignInSide = () => {
                     </Box>
                 </Grid>
             </Grid>
-        </ThemeProvider>
+        </div>
+        // </ThemeProvider>
     );
 };
 

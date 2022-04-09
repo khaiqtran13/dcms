@@ -1,3 +1,4 @@
+import { createTheme, Theme, ThemeProvider } from "@mui/material";
 import React, { useState } from "react";
 import { IUser } from "../../server/src/database/user.types";
 import "./App.css";
@@ -16,13 +17,28 @@ function App() {
         setUserInContext: updateContextUser,
     };
 
+    const darkTheme: Theme = createTheme({
+        palette: {
+            mode: "dark",
+            secondary: {
+                main: "#ff0000",
+            },
+            background: {
+                default: "#121212",
+            },
+            success: {
+                main: "#15A23A",
+            },
+        },
+    });
+
     return (
-        <div className="App">
+        <ThemeProvider theme={darkTheme}>
             {/* TODO: alerts */}
             <AppContext.Provider value={appContext}>
                 <SignInSide />
             </AppContext.Provider>
-        </div>
+        </ThemeProvider>
     );
 }
 
