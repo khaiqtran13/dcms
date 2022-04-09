@@ -10,6 +10,7 @@ import { Button } from "@mui/material";
 
 function App() {
     const [contextUser, setContextUser] = useState<IUser | undefined>();
+    const [loading, setLoading] = useState<boolean>(true);
 
     const updateContextUser = (user: IUser) => {
         setContextUser(user);
@@ -49,6 +50,7 @@ function App() {
                     setContextUser(cachedUser);
                     console.log(cachedUser);
                 }
+                setLoading(false);
             })
             .catch(function (err) {
                 // This code runs if there were any errors
@@ -56,12 +58,13 @@ function App() {
             });
     }, []);
 
+    if (loading) return <div></div>;
     return (
         <ThemeProvider theme={darkTheme}>
             {/* TODO: alerts */}
+
             <AppContext.Provider value={appContext}>
                 {contextUser ? <Homepage /> : <SignInSide />}
-                {/* <SignInSide/> */}
             </AppContext.Provider>
         </ThemeProvider>
     );
