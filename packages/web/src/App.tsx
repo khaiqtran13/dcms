@@ -22,11 +22,6 @@ function App() {
         setUserInContext: updateContextUser,
     };
 
-    const logout = () => {
-        userStore.clear();
-        window.location.reload();
-    };
-
     React.useEffect(() => {
         userStore
             .keys()
@@ -53,13 +48,6 @@ function App() {
             <AppContext.Provider value={appContext}>
                 <Paper className="h-screen" square>
                     {contextUser ? <Homepage /> : <SignInSide />}
-                    <Button
-                        onClick={() => {
-                            logout();
-                        }}
-                    >
-                        Logout
-                    </Button>
                 </Paper>
             </AppContext.Provider>
         </ThemeProvider>
