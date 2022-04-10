@@ -1,12 +1,12 @@
-import { Paper, ThemeProvider } from "@mui/material";
+import { Paper,  ThemeProvider } from "@mui/material";
 import React, { useState } from "react";
 import { IUser } from "../../server/src/database/user.types";
 import "./App.css";
 import { AppContext, IAppContext } from "./AppContext";
 import SignInSide from "./components/SignInSide";
 import Homepage from "./components/Homepage";
-import { setUserInLocalCache, userStore } from "./localForage/users";
 import { darkTheme } from "./theme";
+import { setUserInLocalCache, userStore } from "./localForage/users";
 
 function App() {
     const [contextUser, setContextUser] = useState<IUser | undefined>();
@@ -21,25 +21,10 @@ function App() {
         user: contextUser,
         setUserInContext: updateContextUser,
     };
-
-    const darkTheme: Theme = createTheme({
-        palette: {
-            mode: "dark",
-            secondary: {
-                main: "#ff0000",
-            },
-            background: {
-                default: "#121212",
-            },
-            success: {
-                main: "#15A23A",
-            },
-        },
-    });
     React.useEffect(() => {
         userStore
             .keys()
-            .then(async function (keys) {
+            .then(async function (keys: any[]) {
                 // An array of all the key names.
                 const cachedUser: IUser | null = await userStore.getItem(
                     keys[0],
@@ -50,7 +35,7 @@ function App() {
                 }
                 setLoading(false);
             })
-            .catch(function (err) {
+            .catch(function (err: any) {
                 // This code runs if there were any errors
                 console.log("ah shit I broke it", err);
             });
