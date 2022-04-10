@@ -1,11 +1,14 @@
-import React from 'react'
+import React from "react";
+import { AppointmentComponent } from "./AppointmentComponent";
 
-type Props = {}
+type Props = {};
 
 const PatientHome = (props: Props) => {
-  return (
-    <div >This is where the homepage would be, <br/> frontend mans, fix this ok thanks</div>
-  )
-}
+    return (
+        <div>
+            Patient Home<AppointmentComponent></AppointmentComponent>
+        </div>
+    );
+};
 
 export default PatientHome;
