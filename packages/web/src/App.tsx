@@ -1,4 +1,4 @@
-import { Paper,  ThemeProvider } from "@mui/material";
+import { Button, Paper, ThemeProvider } from "@mui/material";
 import React, { useState } from "react";
 import { IUser } from "../../server/src/database/user.types";
 import "./App.css";
@@ -21,6 +21,12 @@ function App() {
         user: contextUser,
         setUserInContext: updateContextUser,
     };
+
+    const logout = () => {
+        userStore.clear();
+        window.location.reload();
+    };
+
     React.useEffect(() => {
         userStore
             .keys()
@@ -44,10 +50,16 @@ function App() {
     if (loading) return <ThemeProvider theme={darkTheme}></ThemeProvider>;
     return (
         <ThemeProvider theme={darkTheme}>
-            {/* TODO: alerts */}
             <AppContext.Provider value={appContext}>
                 <Paper className="h-screen" square>
                     {contextUser ? <Homepage /> : <SignInSide />}
+                    <Button
+                        onClick={() => {
+                            logout();
+                        }}
+                    >
+                        Logout
+                    </Button>
                 </Paper>
             </AppContext.Provider>
         </ThemeProvider>
