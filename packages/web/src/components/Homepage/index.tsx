@@ -18,6 +18,11 @@ const Homepage = (props: Props) => {
         role = "Error";
     }
 
+    const logout = () => {
+        userStore.clear();
+        window.location.reload();
+    };
+
     return (
         <div className="h-full">
             <div>Logged in as {context?.user?.role}</div>
@@ -29,6 +34,13 @@ const Homepage = (props: Props) => {
                     Error: <Errorpage />,
                 }[role]
             }
+            <Button
+                onClick={() => {
+                    logout();
+                }}
+            >
+                Logout
+            </Button>
         </div>
     );
 };
