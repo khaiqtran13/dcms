@@ -1,5 +1,7 @@
+import { Button } from "@mui/material";
 import React, { useState } from "react";
 import { AppContext, IAppContext } from "../../AppContext";
+import { userStore } from "../../localForage/users";
 
 import DentistMain from "../Dentist";
 import Errorpage from "../Errorpage";
@@ -16,8 +18,13 @@ const Homepage = (props: Props) => {
         role = "Error";
     }
 
+    const logout = () => {
+        userStore.clear();
+        window.location.reload();
+    };
+
     return (
-        <div className="height-full">
+        <div className="h-full">
             <div>Logged in as {context?.user?.role}</div>
             {
                 {
@@ -27,6 +34,13 @@ const Homepage = (props: Props) => {
                     Error: <Errorpage />,
                 }[role]
             }
+            <Button
+                onClick={() => {
+                    logout();
+                }}
+            >
+                Logout
+            </Button>
         </div>
     );
 };
