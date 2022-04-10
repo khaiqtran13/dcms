@@ -58,6 +58,7 @@ export const AppointmentComponent = (props: Props) => {
                         label="procedure-label"
                         onChange={handleProcChange}
                     >
+                        {/* TODO: get these from database instead */}
                         <MenuItem value={"Fillings"}>Fillings</MenuItem>
                         <MenuItem value={"Teeth Whitening"}>
                             Teeth Whitening
