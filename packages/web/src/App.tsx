@@ -1,21 +1,44 @@
-import axios from "axios";
-import React from "react";
+import { createTheme, Theme, ThemeProvider } from "@mui/material";
+import React, { useState } from "react";
+import { IUser } from "../../server/src/database/user.types";
 import "./App.css";
+import { AppContext, IAppContext } from "./AppContext";
 import SignInSide from "./components/SignInSide";
 
 function App() {
-    const fetchUpdatedContext = async () => {
-        axios.get("/api/").then((response) => console.log(response.data));
+    const [contextUser, setContextUser] = useState<IUser | undefined>();
+
+    const updateContextUser = (user: IUser) => {
+        setContextUser(user);
+        // maybe set user in cache?
+    };
+    const appContext: IAppContext = {
+        user: contextUser,
+        setUserInContext: updateContextUser,
     };
 
-    React.useEffect(() => {
-        fetchUpdatedContext();
+    const darkTheme: Theme = createTheme({
+        palette: {
+            mode: "dark",
+            secondary: {
+                main: "#ff0000",
+            },
+            background: {
+                default: "#121212",
+            },
+            success: {
+                main: "#15A23A",
+            },
+        },
     });
 
     return (
-        <div className="App">
-            <SignInSide />
-        </div>
+        <ThemeProvider theme={darkTheme}>
+            {/* TODO: alerts */}
+            <AppContext.Provider value={appContext}>
+                <SignInSide />
+            </AppContext.Provider>
+        </ThemeProvider>
     );
 }
 

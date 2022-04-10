@@ -11,6 +11,8 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios, { AxiosError, AxiosResponse } from "axios";
+import { IUser } from "../../../../server/src/database/user.types";
+import { AppContext, IAppContext } from "../../AppContext";
 
 function Copyright(props: any) {
     return (
@@ -21,8 +23,11 @@ function Copyright(props: any) {
             {...props}
         >
             {"Copyright © "}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
+            <Link
+                color="inherit"
+                href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+            >
+                DCMS
             </Link>{" "}
             {new Date().getFullYear()}
             {"."}
@@ -39,24 +44,34 @@ const SignInSide = () => {
         login();
     };
 
-    const [email, setEmail] = React.useState<string>("");
+    const [userId, setUserId] = React.useState<number>(0);
     const [password, setPassword] = React.useState<string>("");
 
-    const user_id = 1000000; // testing
+    const handleNoNum = (event: any) => {
+        const re = /^[0-9\b]+$/;
+        // if value is not blank, then test the regex
+
+        if (event.target.value === "" || re.test(event.target.value)) {
+            setUserId(event.target.value);
+        }
+    };
+
+    const context: IAppContext | null = React.useContext(AppContext);
+
     const login = async () => {
         axios({
-            method: "GET",
-            url: `http://localhost:8000/api/user/${user_id}`,
-            // data: {
-            //     email: email,
-            //     password: password,
-            // },
+            method: "post",
+            url: `http://localhost:8000/api/login`,
             data: {
-                user_id: user_id,
+                user_id: userId,
+                password: password,
             },
         })
             .then((response: AxiosResponse) => {
-                console.log(response.data);
+                const user: IUser = response.data;
+                context?.setUserInContext(user);
+                console.log(user);
+                console.log("context", context);
             })
             .catch((error: AxiosError<string>) => {
                 console.log(error.response?.data);
@@ -64,7 +79,8 @@ const SignInSide = () => {
     };
 
     return (
-        <ThemeProvider theme={theme}>
+        // <ThemeProvider theme={darkTheme}>
+        <div>
             <Grid container component="main" sx={{ height: "100vh" }}>
                 <CssBaseline />
                 <Grid
@@ -114,23 +130,17 @@ const SignInSide = () => {
                                 margin="normal"
                                 required
                                 fullWidth
-                                id="email"
-                                label="Email Address"
-                                name="email"
-                                autoComplete="email"
+                                label="User ID"
                                 autoFocus
-                                onChange={(event) =>
-                                    setEmail(event.target.value)
-                                }
+                                type="number"
+                                onChange={(event) => handleNoNum(event)}
                             />
                             <TextField
                                 margin="normal"
                                 required
                                 fullWidth
-                                name="password"
                                 label="Password"
                                 type="password"
-                                id="password"
                                 autoComplete="current-password"
                                 onChange={(event) =>
                                     setPassword(event.target.value)
@@ -154,7 +164,7 @@ const SignInSide = () => {
                             >
                                 Sign In
                             </Button>
-                            <Grid container>
+                            {/* <Grid container>
                                 <Grid item xs>
                                     <Link href="#" variant="body2">
                                         Forgot password?
@@ -165,13 +175,14 @@ const SignInSide = () => {
                                         {"Don't have an account? Sign Up"}
                                     </Link>
                                 </Grid>
-                            </Grid>
+                            </Grid> */}
                             <Copyright sx={{ mt: 5 }} />
                         </Box>
                     </Box>
                 </Grid>
             </Grid>
-        </ThemeProvider>
+        </div>
+        // </ThemeProvider>
     );
 };
 
