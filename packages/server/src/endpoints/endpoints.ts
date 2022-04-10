@@ -117,7 +117,7 @@ export const addUser = async (
     new_user.role = "User";
 
     const user = await client.query(
-      `INSERT INTO public.user (user.id, first_name, middle_name, last_name, street_address, city, province, password, role. ssn) 
+      `INSERT INTO public.user (user.id, first_name, middle_name, last_name, street_address, city, province, password, role, ssn) 
       VALUES (${new_user.first_name}, ${new_user.first_name}, ${new_user.middle_name}, ${new_user.last_name}, ${new_user.street_address},
         ${new_user.city}, ${new_user.province}, ${new_user.password}, ${new_user.role}, ${new_user.ssn} ) `
     );
@@ -142,13 +142,21 @@ export const editUser = async (
   res: express.Response
 ) => {
   try {
-    var new_user: IUser = req.body;
-    new_user.role = "User";
+    var curr_user: IUser = req.body;
+    curr_user.role = "User";
 
     const user = await client.query(
-      `INSERT INTO public.user (user.id, first_name, middle_name, last_name, street_address, city, province, password, role. ssn) 
-        VALUES (${new_user.first_name}, ${new_user.first_name}, ${new_user.middle_name}, ${new_user.last_name}, ${new_user.street_address},
-          ${new_user.city}, ${new_user.province}, ${new_user.password}, ${new_user.role}, ${new_user.ssn} ) `
+      `UPDATE public.user 
+      SET first_name= ${curr_user.first_name}, 
+      middle_name = ${curr_user.middle_name}, 
+      last_name= ${curr_user.last_name}, 
+      street_address= ${curr_user.street_address}, 
+      city = ${curr_user.city}, 
+      province= ${curr_user.province}, 
+      password = ${curr_user.password}, 
+      role = ${curr_user.role},
+      ssn = ${curr_user.ssn}
+      WHERE user_id = ${curr_user.user_id}`
     );
     return res.status(201);
   } catch (err: any) {
