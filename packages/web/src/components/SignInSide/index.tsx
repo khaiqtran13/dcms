@@ -9,12 +9,9 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { IUser } from "../../../../server/src/database/user.types";
 import { AppContext, IAppContext } from "../../AppContext";
-import { userStore } from "../../localForage/users";
-import localforage from "localforage";
 
 function Copyright(props: any) {
     return (
@@ -36,8 +33,6 @@ function Copyright(props: any) {
         </Typography>
     );
 }
-
-const theme = createTheme();
 
 const SignInSide = () => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -81,7 +76,6 @@ const SignInSide = () => {
     };
 
     return (
-        // <ThemeProvider theme={darkTheme}>
         <div>
             <Grid container component="main" sx={{ height: "100vh" }}>
                 <CssBaseline />
@@ -184,7 +178,6 @@ const SignInSide = () => {
                 </Grid>
             </Grid>
         </div>
-        // </ThemeProvider>
     );
 };
 

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { AppContext, IAppContext } from "../../AppContext";
+
 import DentistMain from "../Dentist";
 import Errorpage from "../Errorpage";
 import PatientMain from "../Patient";
@@ -15,9 +16,8 @@ const Homepage = (props: Props) => {
         role = "Error";
     }
 
-
     return (
-        <div>
+        <div className="height-full">
             <div>Logged in as {context?.user?.role}</div>
             {
                 {

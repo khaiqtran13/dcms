@@ -1,4 +1,4 @@
-import { createTheme, Theme, ThemeProvider } from "@mui/material";
+import { Paper, ThemeProvider } from "@mui/material";
 import React, { useState } from "react";
 import { IUser } from "../../server/src/database/user.types";
 import "./App.css";
@@ -6,6 +6,7 @@ import { AppContext, IAppContext } from "./AppContext";
 import SignInSide from "./components/SignInSide";
 import Homepage from "./components/Homepage";
 import { setUserInLocalCache, userStore } from "./localForage/users";
+import { darkTheme } from "./theme";
 
 function App() {
     const [contextUser, setContextUser] = useState<IUser | undefined>();
@@ -15,8 +16,6 @@ function App() {
         setContextUser(user);
         setUserInLocalCache(user);
     };
-
-    const context: IAppContext | null = React.useContext(AppContext);
 
     const appContext: IAppContext = {
         user: contextUser,
@@ -57,27 +56,14 @@ function App() {
             });
     }, []);
 
-    const darkTheme: Theme = createTheme({
-        palette: {
-            mode: "dark",
-            secondary: {
-                main: "#ff0000",
-            },
-            background: {
-                default: "#121212",
-            },
-            success: {
-                main: "#15A23A",
-            },
-        },
-    });
     if (loading) return <ThemeProvider theme={darkTheme}></ThemeProvider>;
     return (
         <ThemeProvider theme={darkTheme}>
             {/* TODO: alerts */}
-
             <AppContext.Provider value={appContext}>
-                {contextUser ? <Homepage /> : <SignInSide />}
+                <Paper className="h-screen" square>
+                    {contextUser ? <Homepage /> : <SignInSide />}
+                </Paper>
             </AppContext.Provider>
         </ThemeProvider>
     );
