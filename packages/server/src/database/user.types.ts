@@ -12,18 +12,18 @@ export interface IUser {
 }
 
 export interface IEmployee extends IUser {
-    employee_id: number; // PK
-    record_id: string; // FK
-    employee_type: string;
-    salary: number;
+  employee_id: number; // PK
+  record_id: string; // FK
+  employee_type: string;
+  salary: number;
 }
 
 export interface IPatient extends IUser {
-    patient_id?: number; // PK
-    gender: string;
-    insurance: string;
-    email_address: string;
-    DOB: Date; // or string?
-    payment_id?: string; // FK
-    record_id?: string; // FK
+  patient_id?: number; // PK
+  gender: string;
+  insurance: string;
+  email_address: string;
+  date_of_birth: Date; // or string?
+  payment_id?: string; // FK
+  record_id?: string; // FK
 }

@@ -1,6 +1,6 @@
 import client from "../../connection";
 import express from "express";
-import { IUser } from "../database/user.types";
+import { IPatient, IUser } from "../database/user.types";
 
 // TODO: express Typing - didn't add TypeScript for shits and giggles
 
@@ -100,26 +100,31 @@ export const getAppointments = async (
 //Adds the user to the database
 export const addUser = async (
   req: express.Request<{
-    user_id: number;
-    first_name: string;
-    middle_name: string;
-    last_name: string;
-    street_address: string;
-    city: string;
-    province: string;
-    password: string;
-    ssn: number;
+    new_patient: IPatient;
   }>,
   res: express.Response
 ) => {
   try {
-    var new_user: IUser = req.body;
+    var new_user: IPatient = req.body;
     new_user.role = "User";
+
+    if (new_user.user_id == 0) {
+      let max = 9999999;
+      let min = 1000100;
+      new_user.user_id = Math.floor(Math.random() * (max - min) + min);
+      new_user.patient_id = Math.floor(Math.random() * (max - min) + min);
+    }
 
     const user = await client.query(
       `INSERT INTO public.user (user.id, first_name, middle_name, last_name, street_address, city, province, password, role, ssn) 
       VALUES (${new_user.first_name}, ${new_user.first_name}, ${new_user.middle_name}, ${new_user.last_name}, ${new_user.street_address},
         ${new_user.city}, ${new_user.province}, ${new_user.password}, ${new_user.role}, ${new_user.ssn} ) `
+    );
+
+    const patient = await client.query(
+      `INSERT INTO public.patients (patient_id, gender, insurance, email_address, date_of_birth, payment_id, record_id, user_id) 
+        VALUES (${new_user.patient_id}, ${new_user.gender}, ${new_user.insurance}, ${new_user.email_address}, ${new_user.date_of_birth},
+            ${new_user.payment_id}, ${new_user.record_id}, ${new_user.user_id} ) `
     );
     return res.status(201);
   } catch (err: any) {
@@ -129,20 +134,12 @@ export const addUser = async (
 
 export const editUser = async (
   req: express.Request<{
-    user_id: number;
-    first_name: string;
-    middle_name: string;
-    last_name: string;
-    street_address: string;
-    city: string;
-    province: string;
-    password: string;
-    ssn: number;
+    new_patient: IPatient;
   }>,
   res: express.Response
 ) => {
   try {
-    var curr_user: IUser = req.body;
+    var curr_user: IPatient = req.body;
     curr_user.role = "User";
 
     const user = await client.query(
@@ -157,6 +154,15 @@ export const editUser = async (
       role = ${curr_user.role},
       ssn = ${curr_user.ssn}
       WHERE user_id = ${curr_user.user_id}`
+    );
+
+    const patient = await client.query(
+      `UPDATE public.patient
+        SET gender= ${curr_user.gender},
+        insurance = ${curr_user.insurance},
+        email_address = ${curr_user.email_address},
+        date_of_birth = ${curr_user.date_of_birth}
+        WHERE user_id = ${curr_user.user_id}`
     );
     return res.status(201);
   } catch (err: any) {
