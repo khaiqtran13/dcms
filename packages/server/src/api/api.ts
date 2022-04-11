@@ -1,11 +1,12 @@
 import express from "express";
 import {
-    getAppointments,
-    getLogin,
-    getPatients,
-    getRecords,
-    getUserById,
-    getUsers,
+  getAppointments,
+  getBranches,
+  getLogin,
+  getPatients,
+  getRecords,
+  getUserById,
+  getUsers,
 } from "../endpoints/endpoints";
 
 const apiRouter = express.Router();
@@ -26,4 +27,6 @@ apiRouter.get("/patients", getPatients);
 apiRouter.get("/records", getRecords);
 apiRouter.get("/appointments", getAppointments);
 
+//branch
+apiRouter.get("/branches", getBranches);
 export default apiRouter;
