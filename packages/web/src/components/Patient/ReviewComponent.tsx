@@ -1,4 +1,5 @@
 import {
+    Button,
     MenuItem,
     Paper,
     Rating,
@@ -24,9 +25,13 @@ export const ReviewComponent = (props: Props) => {
         setBranch(event.target.value as string);
     };
 
+    const handleSubmit = () => {
+        // TODO
+    };
+
     return (
         <Paper className="w-96 p-8 mx-auto" elevation={8}>
-            <h1 className="text-2xl font-semibold mb-2">Review</h1>
+            <h1 className="text-2xl font-semibold mb-4">Review</h1>
             <div className="flex flex-col">
                 <Select
                     labelId="procedure-label"
@@ -65,6 +70,13 @@ export const ReviewComponent = (props: Props) => {
                     }}
                     className="mb-4"
                 />
+                <Button
+                    onClick={() => {
+                        handleSubmit();
+                    }}
+                >
+                    SUBMIT
+                </Button>
             </div>
         </Paper>
     );
