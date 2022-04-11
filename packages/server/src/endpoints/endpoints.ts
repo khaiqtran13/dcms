@@ -47,8 +47,6 @@ export const getLogin = async (
         const user = await client.query(
             `SELECT * FROM public.user WHERE user_id = ${user_id} AND password = ${password}`,
         );
-        // console.log(user.rows);
-        // console.log(res.status(200).json(user.rows));
         return res.status(200).json(user.rows);
     } catch (err: any) {
         console.error(err.message);
@@ -68,7 +66,7 @@ export const getPatients = async (
     }
 };
 
-// We will need to be able to view patient's records
+// Can be called by anyone to view a patient's records
 export const getRecords = async (
     req: express.Request,
     res: express.Response,
@@ -76,6 +74,20 @@ export const getRecords = async (
     try {
         const records = await client.query("SELECT * FROM public.records");
         res.json(records.rows);
+    } catch (err: any) {
+        console.error(err.message);
+    }
+};
+
+// Can be called by a patient to view their own records
+export const getPatientRecords = async (
+    req: express.Request<{ patient_id: number }>,
+    res: express.Response,
+) => {
+    try {
+        const patient_id = req.body.user_id;
+        const records = await client.query(`SELECT * FROM public.records WHERE patient_id = ${patient_id}`);
+        return res.status(200).json(records.rows);
     } catch (err: any) {
         console.error(err.message);
     }

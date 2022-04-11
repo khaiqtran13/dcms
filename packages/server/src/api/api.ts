@@ -2,6 +2,7 @@ import express from "express";
 import {
     getAppointments,
     getLogin,
+    getPatientRecords,
     getPatients,
     getRecords,
     getUserById,
@@ -25,5 +26,9 @@ apiRouter.post("/login", getLogin);
 apiRouter.get("/patients", getPatients);
 apiRouter.get("/records", getRecords);
 apiRouter.get("/appointments", getAppointments);
+
+// patient
+apiRouter.get("/patient_records", getPatientRecords);
+
 
 export default apiRouter;
