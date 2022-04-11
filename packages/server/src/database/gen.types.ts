@@ -1,5 +1,5 @@
 export interface IReview {
-    user_id: string;
+    user_id: number;
     professionalism: number;
     communication: number;
     cleanliness: number;
