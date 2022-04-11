@@ -149,6 +149,7 @@ const AddPatientComponent: React.FC = ({}: Props) => {
                         onChange={(event) => {
                             handleSSN(event);
                         }}
+                        type="number"
                         label="SSN"
                         variant="outlined"
                     />
