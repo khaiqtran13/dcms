@@ -49,7 +49,8 @@ export const ReviewComponent = (props: Props) => {
                 professionalism: professionalValue,
                 communication: communicationValue,
                 cleanliness: cleanValue,
-                value: 0,
+                value:
+                    (professionalValue + communicationValue + cleanValue) / 3,
             };
             console.log(review);
         }
