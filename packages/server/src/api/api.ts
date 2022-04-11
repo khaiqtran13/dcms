@@ -1,11 +1,12 @@
 import express from "express";
 import {
-    getAppointments,
-    getLogin,
-    getPatients,
-    getRecords,
-    getUserById,
-    getUsers,
+  getAppointments,
+  getLogin,
+  getPatients,
+  getProcedureNames,
+  getRecords,
+  getUserById,
+  getUsers,
 } from "../endpoints/endpoints";
 
 const apiRouter = express.Router();
@@ -25,5 +26,8 @@ apiRouter.post("/login", getLogin);
 apiRouter.get("/patients", getPatients);
 apiRouter.get("/records", getRecords);
 apiRouter.get("/appointments", getAppointments);
+
+// appointment procedures
+apiRouter.get("/procedures/names", getProcedureNames);
 
 export default apiRouter;
