@@ -8,6 +8,6 @@ export const userStore = localforage.createInstance({
 export async function setUserInLocalCache(
     user: IUser,
 ): Promise<IUser | undefined> {
-    await userStore.setItem(user.user_id.toString(), user);
+    await userStore.setItem(user.user_id?.toString(), user);
     return user;
 }
