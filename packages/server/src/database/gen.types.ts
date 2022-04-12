@@ -10,10 +10,10 @@ export interface IAppointment {
     fee_id?: string;
     patient_id?: string;
     dentist_id: number;
-    cancelDate?: Date;
+    cancel_date?: Date;
     user_id: number;
-    startDate: Date;
-    endDate: Date;
+    start_date: Date;
+    end_time?: string;
     status: string;
     appointment_type: string;
     appointment_id: number; // idk
