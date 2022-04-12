@@ -9,12 +9,12 @@ export interface IReview {
 export interface IAppointment {
     fee_id?: string;
     patient_id?: string;
-    dentist_id?: number;
+    dentist_id: number;
+    cancelDate?: Date;
     user_id: number;
     startDate: Date;
     endDate: Date;
     status: string;
-    cancelDate: Date;
     appointment_type: string;
     appointment_id: number; // idk
 }
