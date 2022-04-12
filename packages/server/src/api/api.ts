@@ -1,7 +1,9 @@
 import express from "express";
 import {
+    getAppointmentByPatientId,
     getAppointments,
     getLogin,
+    getPatientRecordById,
     getPatientRecords,
     getPatients,
     getRecords,
@@ -25,10 +27,13 @@ apiRouter.get("/user/:user_id", getUserById);
 apiRouter.post("/login", getLogin);
 apiRouter.get("/patients", getPatients);
 apiRouter.get("/records", getRecords);
-apiRouter.get("/appointments", getAppointments);
 
 // patient
 apiRouter.get("/patient_records", getPatientRecords);
+apiRouter.get("/patient_records/:patient_id", getPatientRecordById)
+apiRouter.get("/appointments", getAppointments);
+apiRouter.get("/appointments/:patient_id", getAppointmentByPatientId);
+
 
 
 export default apiRouter;

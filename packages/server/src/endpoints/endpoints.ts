@@ -81,11 +81,25 @@ export const getRecords = async (
 
 // Can be called by a patient to view their own records
 export const getPatientRecords = async (
-    req: express.Request<{ patient_id: number }>,
+    req: express.Request,
     res: express.Response,
 ) => {
     try {
-        const patient_id = req.body.user_id;
+        const {patient_id} = req.params;
+        const records = await client.query(`SELECT * FROM public.records`);
+        return res.status(200).json(records.rows);
+    } catch (err: any) {
+        console.error(err.message);
+    }
+};
+
+// Can be called by a patient to view their own records
+export const getPatientRecordById = async (
+    req: express.Request,
+    res: express.Response,
+) => {
+    try {
+        const {patient_id} = req.params;
         const records = await client.query(`SELECT * FROM public.records WHERE patient_id = ${patient_id}`);
         return res.status(200).json(records.rows);
     } catch (err: any) {
@@ -99,9 +113,23 @@ export const getAppointments = async (
     res: express.Response,
 ) => {
     try {
+        const {patient_id} = req.params;
         const appointments = await client.query(
-            "SELECT * FROM public.appointments",
-        );
+            `SELECT * FROM public.appointments`);
+        res.json(appointments.rows);
+    } catch (err: any) {
+        console.error(err.message);
+    }
+};
+
+export const getAppointmentByPatientId = async (
+    req: express.Request,
+    res: express.Response,
+) => {
+    try {
+        const {patient_id} = req.params;
+        const appointments = await client.query(
+            `SELECT * FROM public.appointments WHERE patient_id = ${patient_id}`);
         res.json(appointments.rows);
     } catch (err: any) {
         console.error(err.message);
