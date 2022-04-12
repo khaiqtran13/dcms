@@ -17,15 +17,29 @@ import {
 type Props = {};
 
 export const AppointmentComponent = (props: Props) => {
-    const [value, setValue] = React.useState<Date | null>(new Date());
+    const [startValue, setStartValue] = React.useState<Date | null>(new Date());
+    const [endValue, setEndValue] = React.useState<Date | null>(new Date());
     const [procedure, setProcedure] = React.useState<string>("");
 
-    const handleTimeChange = (newValue: Date | null) => {
-        setValue(newValue);
+    const handleDayChange = (newValue: Date | null) => {
+        setStartValue(newValue);
+        setEndValue(newValue);
+    };
+
+    const handleStartTimeChange = (newValue: Date | null) => {
+        setStartValue(newValue);
+    };
+
+    const handleEndTimeChange = (newValue: Date | null) => {
+        setEndValue(newValue);
     };
 
     const handleProcChange = (event: SelectChangeEvent) => {
         setProcedure(event.target.value as string);
+    };
+
+    const handleSubmit = () => {
+        console.log("startTime:", startValue, "\nendTime:", endValue);
     };
 
     return (
@@ -38,14 +52,20 @@ export const AppointmentComponent = (props: Props) => {
                     <DesktopDatePicker
                         label="Date desktop"
                         inputFormat="MM/dd/yyyy"
-                        value={value}
-                        onChange={handleTimeChange}
+                        value={startValue}
+                        onChange={handleDayChange}
                         renderInput={(params) => <TextField {...params} />}
                     />
                     <TimePicker
-                        label="Time"
-                        value={value}
-                        onChange={handleTimeChange}
+                        label="Start Time"
+                        value={startValue}
+                        onChange={handleStartTimeChange}
+                        renderInput={(params) => <TextField {...params} />}
+                    />{" "}
+                    <TimePicker
+                        label="End Time"
+                        value={endValue}
+                        onChange={handleEndTimeChange}
                         renderInput={(params) => <TextField {...params} />}
                     />
                     {/* TODO: fix this broken ass input label */}
@@ -67,7 +87,7 @@ export const AppointmentComponent = (props: Props) => {
                     </Select>
                     <Button
                         onClick={() => {
-                            console.log(value);
+                            handleSubmit();
                         }}
                     >
                         SUBMIT

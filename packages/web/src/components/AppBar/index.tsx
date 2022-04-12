@@ -15,10 +15,14 @@ export const TopAppBar = (props: any) => {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
                 <Toolbar className="flex justify-between">
-                    <p className="flex text-5xl font-semibold text-transparent bg-clip-text bg-gradient-to-br from-blue-400 to-purple-600">
-                        DCMS: <p className="text-white ml-2">{userRole}</p>
-                    </p>
-
+                    <span className="flex">
+                        <p className="flex text-5xl font-semibold text-transparent bg-clip-text bg-gradient-to-br from-blue-400 to-purple-600">
+                            DCMS:
+                        </p>
+                        <p className="text-5xl font-semibold text-white ml-2">
+                            {userRole}
+                        </p>
+                    </span>
                     <Button
                         onClick={() => {
                             logout();

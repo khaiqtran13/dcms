@@ -36,6 +36,24 @@ const AddPatientComponent: React.FC = ({}: Props) => {
         }
     };
 
+    const validate = () => {
+        return !!(
+            firstName &&
+            middleName &&
+            lastName &&
+            streetAddress &&
+            city &&
+            province &&
+            password &&
+            role &&
+            SSN &&
+            gender &&
+            insurance &&
+            email &&
+            DOB
+        );
+    };
+
     const handleSubmit = () => {
         if (
             firstName &&
@@ -190,6 +208,7 @@ const AddPatientComponent: React.FC = ({}: Props) => {
                         onClick={() => {
                             handleSubmit();
                         }}
+                        disabled={!validate()}
                     >
                         SUBMIT
                     </Button>

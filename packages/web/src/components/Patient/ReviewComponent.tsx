@@ -7,26 +7,53 @@ import {
     SelectChangeEvent,
     Typography,
 } from "@mui/material";
+import { IReview } from "../../../../server/src/database/gen.types";
 import React from "react";
+import { AppContext, IAppContext } from "../../AppContext";
 
 type Props = {};
 
 export const ReviewComponent = (props: Props) => {
     const [professionalValue, setProfessionalValue] = React.useState<
         number | null
-    >(2);
-    const [cleanValue, setCleanValue] = React.useState<number | null>(2);
+    >(5);
+    const [cleanValue, setCleanValue] = React.useState<number | null>(5);
     const [communicationValue, setCommunicationValue] = React.useState<
         number | null
-    >(2);
+    >(5);
     const [branch, setBranch] = React.useState<string>("");
 
     const handleBranchChange = (event: SelectChangeEvent) => {
         setBranch(event.target.value as string);
     };
 
+    const context: IAppContext | null = React.useContext(AppContext);
+
     const handleSubmit = () => {
-        // TODO
+        var review: IReview = {
+            user_id: 0,
+            professionalism: 0,
+            communication: 0,
+            cleanliness: 0,
+            value: 0,
+        };
+
+        if (
+            context?.user?.user_id &&
+            professionalValue &&
+            communicationValue &&
+            cleanValue
+        ) {
+            review = {
+                user_id: context?.user?.user_id,
+                professionalism: professionalValue,
+                communication: communicationValue,
+                cleanliness: cleanValue,
+                value:
+                    (professionalValue + communicationValue + cleanValue) / 3,
+            };
+            console.log(review);
+        }
     };
 
     return (
