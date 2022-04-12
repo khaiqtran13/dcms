@@ -16,20 +16,20 @@ type Props = {};
 const appointments: IAppointment[] = [
     {
         user_id: 0,
-        startDate: new Date(),
-        endDate: new Date(),
+        start_date: new Date(),
+        end_time: "10:00",
         status: "string",
-        cancelDate: new Date(),
+        cancel_date: new Date(),
         appointment_type: "Appointment",
         appointment_id: 1, // idk,
         dentist_id: 0,
     },
     {
         user_id: 0,
-        startDate: new Date(),
-        endDate: new Date(),
+        start_date: new Date(),
+        end_time: "6:00",
         status: "string",
-        cancelDate: new Date(),
+        cancel_date: new Date(),
         appointment_type: "Appointment",
         appointment_id: 1, // idk,
         dentist_id: 0,
@@ -53,12 +53,9 @@ export const CalendarComponent = (props: Props) => {
                                 <Divider className="py-1" />
                                 <p>
                                     Date:{" "}
-                                    {format(apt.startDate, "MMMM do, yyyy")}
+                                    {format(apt.start_date, "MMMM do, yyyy")}
                                 </p>
-                                <p>
-                                    Time: {format(apt.startDate, "H:mma")} -{" "}
-                                    {format(apt.endDate, "H:mma")}
-                                </p>
+                                <p>Time: {format(apt.start_date, "H:mma")}</p>
                             </CardContent>
                         </Card>
                     );

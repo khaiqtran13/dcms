@@ -28,17 +28,13 @@ export const AppointmentComponent = (props: Props) => {
 
     const context: IAppContext | null = React.useContext(AppContext);
 
-    const handleDayChange = (newValue: Date | null) => {
-        setStartValue(newValue);
-        setEndValue(newValue);
-    };
+    // const handleDayChange = (newValue: Date | null) => {
+    //     setStartValue(newValue);
+    //     setEndValue(newValue);
+    // };
 
     const handleStartTimeChange = (newValue: Date | null) => {
         setStartValue(newValue);
-    };
-
-    const handleEndTimeChange = (newValue: Date | null) => {
-        setEndValue(newValue);
     };
 
     const handleProcChange = (event: SelectChangeEvent) => {
@@ -69,8 +65,7 @@ export const AppointmentComponent = (props: Props) => {
         ) {
             const appointment: IAppointment = {
                 user_id: context?.user?.user_id,
-                startDate: startValue,
-                endDate: endValue,
+                start_date: startValue,
                 status: "pending",
                 appointment_type: procedure,
                 appointment_id: 0,
@@ -91,19 +86,13 @@ export const AppointmentComponent = (props: Props) => {
                         label="Date desktop"
                         inputFormat="MM/dd/yyyy"
                         value={startValue}
-                        onChange={handleDayChange}
+                        onChange={handleStartTimeChange}
                         renderInput={(params) => <TextField {...params} />}
                     />
                     <TimePicker
                         label="Start Time"
                         value={startValue}
                         onChange={handleStartTimeChange}
-                        renderInput={(params) => <TextField {...params} />}
-                    />{" "}
-                    <TimePicker
-                        label="End Time"
-                        value={endValue}
-                        onChange={handleEndTimeChange}
                         renderInput={(params) => <TextField {...params} />}
                     />
                     <Select
