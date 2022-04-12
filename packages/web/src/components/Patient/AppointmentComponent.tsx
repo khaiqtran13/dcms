@@ -28,11 +28,6 @@ export const AppointmentComponent = (props: Props) => {
 
     const context: IAppContext | null = React.useContext(AppContext);
 
-    // const handleDayChange = (newValue: Date | null) => {
-    //     setStartValue(newValue);
-    //     setEndValue(newValue);
-    // };
-
     const handleStartTimeChange = (newValue: Date | null) => {
         setStartValue(newValue);
     };
