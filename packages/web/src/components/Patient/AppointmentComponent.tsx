@@ -6,13 +6,14 @@ import TimePicker from "@mui/lab/TimePicker";
 import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
 import {
     Button,
-    FormControl,
-    InputLabel,
     MenuItem,
     Paper,
     Select,
     SelectChangeEvent,
 } from "@mui/material";
+import { IAppointment } from "../../../../server/src/database/gen.types";
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { IUser } from "../../../../server/src/database/user.types";
 
 type Props = {};
 
@@ -20,6 +21,9 @@ export const AppointmentComponent = (props: Props) => {
     const [startValue, setStartValue] = React.useState<Date | null>(new Date());
     const [endValue, setEndValue] = React.useState<Date | null>(new Date());
     const [procedure, setProcedure] = React.useState<string>("");
+    const [selectedDentistID, setSelectedDentistID] = React.useState<number>();
+
+    const [dentists, setDentists] = React.useState<IUser[]>();
 
     const handleDayChange = (newValue: Date | null) => {
         setStartValue(newValue);
@@ -37,9 +41,34 @@ export const AppointmentComponent = (props: Props) => {
     const handleProcChange = (event: SelectChangeEvent) => {
         setProcedure(event.target.value as string);
     };
+    React.useEffect(() => {
+        axios({
+            method: "GET",
+            url: "http://localhost:8000/api/user/dentists",
+        })
+            .then((response: AxiosResponse) => {
+                const fetchedDentists = response.data;
+                setDentists(fetchedDentists);
+                console.log(dentists);
+            })
+            .catch((error: AxiosError<string>) => {
+                console.log(error.response?.data);
+            });
+    }, []);
 
     const handleSubmit = () => {
-        console.log("startTime:", startValue, "\nendTime:", endValue);
+        if (startValue && endValue && procedure && selectedDentistID) {
+            const appointment: IAppointment = {
+                user_id: 0,
+                startDate: startValue,
+                endDate: endValue,
+                status: "pending",
+                appointment_type: "",
+                appointment_id: 0, // set in backend
+                dentist_id: selectedDentistID,
+            };
+            console.log(appointment);
+        }
     };
 
     return (
@@ -68,6 +97,23 @@ export const AppointmentComponent = (props: Props) => {
                         onChange={handleEndTimeChange}
                         renderInput={(params) => <TextField {...params} />}
                     />
+                    <Select
+                        labelId="procedure-label"
+                        id="procedure-label"
+                        title="Procedure"
+                        label="procedure-label"
+                        onChange={(event) => {
+                            setSelectedDentistID(Number(event.target.value));
+                        }}
+                    >
+                        {dentists?.map((d) => {
+                            return (
+                                <MenuItem value={d.user_id}>
+                                    Dr. {d.last_name}
+                                </MenuItem>
+                            );
+                        })}
+                    </Select>
                     {/* TODO: fix this broken ass input label */}
                     {/* <InputLabel id="procedure-label">Procedure</InputLabel> */}
                     <Select

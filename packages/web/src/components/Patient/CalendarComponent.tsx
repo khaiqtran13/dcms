@@ -21,7 +21,18 @@ const appointments: IAppointment[] = [
         status: "string",
         cancelDate: new Date(),
         appointment_type: "Appointment",
-        appointment_id: 1, // idk
+        appointment_id: 1, // idk,
+        dentist_id: 0,
+    },
+    {
+        user_id: 0,
+        startDate: new Date(),
+        endDate: new Date(),
+        status: "string",
+        cancelDate: new Date(),
+        appointment_type: "Appointment",
+        appointment_id: 1, // idk,
+        dentist_id: 0,
     },
 ];
 
