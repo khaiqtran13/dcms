@@ -1,6 +1,7 @@
 import express from "express";
 import {
-  addUser,
+  addPatient,
+  editPatient,
   getAppointments,
   getDentists,
   getLogin,
@@ -8,6 +9,7 @@ import {
   getRecords,
   getUserById,
   getUsers,
+  setAppointment,
 } from "../endpoints/endpoints";
 
 const apiRouter = express.Router();
@@ -19,19 +21,26 @@ you can add multiple functions
 ex: apiRouter.post("/password/sendcode", isLoggedOut, requestPasswordResetCode);
 */
 
-// user
-//This is more a misc. list of API calls
 apiRouter.get("/", (req: any, res: any) => res.send(req));
+
+// user
 apiRouter.get("/user", getUsers);
 apiRouter.get("/user/dentists", getDentists);
+apiRouter.post("/user/add", addPatient);
+apiRouter.post("/user/edit/:user_id", editPatient);
 apiRouter.get("/user/:user_id", getUserById);
-apiRouter.post("/login", getLogin);
-apiRouter.get("/patients", getPatients);
-apiRouter.get("/records", getRecords);
-apiRouter.get("/appointments", getAppointments);
 
-//receptionist
-apiRouter.post("/user/add", addUser);
-apiRouter.post("/user/edit/:user_id", addUser);
+// login
+apiRouter.post("/login", getLogin);
+
+//patients
+apiRouter.get("/patients", getPatients);
+
+//records
+apiRouter.get("/records", getRecords);
+
+//appoiontments
+apiRouter.get("/appointments", getAppointments);
+apiRouter.post("/appointments/set/:user_id", setAppointment);
 
 export default apiRouter;

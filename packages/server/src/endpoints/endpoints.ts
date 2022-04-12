@@ -1,6 +1,7 @@
 import client from "../../connection";
 import express from "express";
 import { IPatient, IUser } from "../database/user.types";
+import { IAppointment } from "../database/gen.types";
 
 // TODO: express Typing - didn't add TypeScript for shits and giggles
 
@@ -98,14 +99,14 @@ export const getAppointments = async (
 };
 
 //Adds the user to the database
-export const addUser = async (
+export const addPatient = async (
   req: express.Request<{
     new_patient: IPatient;
   }>,
   res: express.Response
 ) => {
   try {
-    var new_user: IPatient = req.body;
+    var new_user: IPatient = req.body.new_patient;
     new_user.role = "User";
 
     if (new_user.user_id == 0) {
@@ -132,14 +133,14 @@ export const addUser = async (
   }
 };
 
-export const editUser = async (
+export const editPatient = async (
   req: express.Request<{
     new_patient: IPatient;
   }>,
   res: express.Response
 ) => {
   try {
-    var curr_user: IPatient = req.body;
+    var curr_user: IPatient = req.body.new_patient;
     curr_user.role = "User";
 
     const user = await client.query(
@@ -169,6 +170,7 @@ export const editUser = async (
     console.error(err.message);
   }
 };
+
 export const getDentists = async (
   req: express.Request,
   res: express.Response
@@ -178,6 +180,45 @@ export const getDentists = async (
       "SELECT * FROM public.user WHERE public.user.role = 'Dentist'"
     );
     res.json(users.rows);
+  } catch (err: any) {
+    console.error(err.message);
+  }
+};
+
+export const setAppointment = async (
+  req: express.Request<{
+    new_app: IAppointment;
+    user_id: number;
+  }>,
+  res: express.Response
+) => {
+  try {
+    var new_app: IAppointment = req.body.new_app;
+    var user_id: number = req.body.user_id;
+
+    const patient_query = await client.query(
+      `SELECT public.patients.patient_id FROM public.patients WHERE user_id = ${user_id}`
+    );
+
+    new_app.patient_id = patient_query.rows[0];
+
+    if (new_app.appointment_id == 0) {
+      let max = 9999;
+      let min = 100;
+      new_app.appointment_id = Math.floor(Math.random() * (max - min) + min);
+    }
+
+    const appointment_insert = await client.query(
+      `INSERT INTO public.appointments
+      (fee_id, patient_id, dentist_id, user_id, startDate, endDate, status, cancelDate,
+      appointment_type, appointment_id)
+      VALUES
+      (${new_app.fee_id}, ${new_app.patient_id}, ${new_app.dentist_id}, ${new_app.user_id},
+      ${new_app.startDate}, ${new_app.endDate}, ${new_app.status}, ${new_app.status}, ${new_app.cancelDate},
+      ${new_app.appointment_type}, ${new_app.appointment_id})`
+    );
+
+    return res.status(201);
   } catch (err: any) {
     console.error(err.message);
   }
