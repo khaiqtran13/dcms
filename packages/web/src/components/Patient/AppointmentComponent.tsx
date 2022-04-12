@@ -14,6 +14,7 @@ import {
 import { IAppointment } from "../../../../server/src/database/gen.types";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { IUser } from "../../../../server/src/database/user.types";
+import { AppContext, IAppContext } from "../../AppContext";
 
 type Props = {};
 
@@ -24,6 +25,8 @@ export const AppointmentComponent = (props: Props) => {
     const [selectedDentistID, setSelectedDentistID] = React.useState<number>();
 
     const [dentists, setDentists] = React.useState<IUser[]>();
+
+    const context: IAppContext | null = React.useContext(AppContext);
 
     const handleDayChange = (newValue: Date | null) => {
         setStartValue(newValue);
@@ -57,14 +60,20 @@ export const AppointmentComponent = (props: Props) => {
     }, []);
 
     const handleSubmit = () => {
-        if (startValue && endValue && procedure && selectedDentistID) {
+        if (
+            startValue &&
+            endValue &&
+            procedure &&
+            selectedDentistID &&
+            context?.user?.user_id
+        ) {
             const appointment: IAppointment = {
-                user_id: 0,
+                user_id: context?.user?.user_id,
                 startDate: startValue,
                 endDate: endValue,
                 status: "pending",
-                appointment_type: "",
-                appointment_id: 0, // set in backend
+                appointment_type: procedure,
+                appointment_id: 0,
                 dentist_id: selectedDentistID,
             };
             console.log(appointment);
