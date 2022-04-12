@@ -169,3 +169,16 @@ export const editUser = async (
     console.error(err.message);
   }
 };
+export const getDentists = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  try {
+    const users = await client.query(
+      "SELECT * FROM public.user WHERE public.user.role = 'Dentist'"
+    );
+    res.json(users.rows);
+  } catch (err: any) {
+    console.error(err.message);
+  }
+};
