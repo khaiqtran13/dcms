@@ -208,13 +208,14 @@ export const setAppointment = async (
       new_app.appointment_id = Math.floor(Math.random() * (max - min) + min);
     }
 
+    //FIX THIS WHEN POSSIBLE
     const appointment_insert = await client.query(
       `INSERT INTO public.appointments
       (fee_id, patient_id, dentist_id, user_id, startDate, endDate, status, cancelDate,
       appointment_type, appointment_id)
       VALUES
       (${new_app.fee_id}, ${new_app.patient_id}, ${new_app.dentist_id}, ${new_app.user_id},
-      ${new_app.startDate}, ${new_app.endDate}, ${new_app.status}, ${new_app.status}, ${new_app.cancelDate},
+      ${new_app.start_date}, ${new_app.end_time}, ${new_app.status}, ${new_app.status}, ${new_app.cancel_date},
       ${new_app.appointment_type}, ${new_app.appointment_id})`
     );
 
