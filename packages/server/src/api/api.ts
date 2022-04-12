@@ -2,6 +2,7 @@ import express from "express";
 import {
     getAppointmentByPatientId,
     getAppointments,
+    getDentists,
     getLogin,
     getPatientRecordById,
     getPatientRecords,
@@ -23,6 +24,7 @@ ex: apiRouter.post("/password/sendcode", isLoggedOut, requestPasswordResetCode);
 // user
 apiRouter.get("/", (req: any, res: any) => res.send(req));
 apiRouter.get("/user", getUsers);
+apiRouter.get("/user/dentists", getDentists);
 apiRouter.get("/user/:user_id", getUserById);
 apiRouter.post("/login", getLogin);
 apiRouter.get("/patients", getPatients);
