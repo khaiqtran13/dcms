@@ -15,6 +15,7 @@ unless your a JT/TS god and want to parse JSON instead of using SQL
 what're chances the prof checks
 */
 
+//Gets all users
 export const getUsers = async (req: express.Request, res: express.Response) => {
   try {
     const users = await client.query("SELECT * FROM public.user");
@@ -24,6 +25,7 @@ export const getUsers = async (req: express.Request, res: express.Response) => {
   }
 };
 
+//Gets a user by ID
 export const getUserById = async (req: express.Request, res: any) => {
   try {
     const { user_id } = req.params;
@@ -145,6 +147,7 @@ export const addPatient = async (
   }
 };
 
+//Edits a patient
 export const editPatient = async (
   req: express.Request<{
     new_patient: IPatient;
@@ -183,6 +186,7 @@ export const editPatient = async (
   }
 };
 
+//Gets a list of all the dentists
 export const getDentists = async (
   req: express.Request,
   res: express.Response
@@ -197,6 +201,7 @@ export const getDentists = async (
   }
 };
 
+//Gets all the appointments based on user ID
 export const getAppointmentByPatientId = async (
   req: express.Request,
   res: express.Response
@@ -212,6 +217,7 @@ export const getAppointmentByPatientId = async (
   }
 };
 
+//Sets an appointment based on IAppointment and user_id
 export const setAppointment = async (
   req: express.Request<{
     new_app: IAppointment;
@@ -235,7 +241,6 @@ export const setAppointment = async (
       new_app.appointment_id = Math.floor(Math.random() * (max - min) + min);
     }
 
-    //FIX THIS WHEN POSSIBLE
     const appointment_insert = await client.query(
       `INSERT INTO public.appointments
       (fee_id, patient_id, dentist_id, cancel_date, date, duration, appointment_type, status,
