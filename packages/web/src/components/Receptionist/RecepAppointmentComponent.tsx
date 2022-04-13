@@ -77,7 +77,6 @@ export const RecepAppointmentComponent = (props: Props) => {
             selectedUserID
         ) {
             const appointment: IAppointment = {
-                user_id: selectedUserID,
                 date: startValue,
                 duration: 60,
                 status: "incomplete",
@@ -85,6 +84,16 @@ export const RecepAppointmentComponent = (props: Props) => {
                 appointment_id: 0,
                 dentist_id: selectedDentistID,
             };
+            axios({
+                method: "GET",
+                url: "",
+                data: {
+                    appointment: appointment,
+                    uesr_id: selectedUserID,
+                },
+            }).catch((error: AxiosError<string>) => {
+                console.log(error.response?.data);
+            });
             console.log(appointment);
         }
     };

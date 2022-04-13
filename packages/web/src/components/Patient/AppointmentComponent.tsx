@@ -61,7 +61,6 @@ export const AppointmentComponent = (props: Props) => {
             context?.user?.user_id
         ) {
             const appointment: IAppointment = {
-                user_id: context?.user?.user_id,
                 date: startValue,
                 duration: 60,
                 status: "incomplete",
@@ -69,7 +68,16 @@ export const AppointmentComponent = (props: Props) => {
                 appointment_id: 0,
                 dentist_id: selectedDentistID,
             };
-            console.log(appointment);
+            axios({
+                method: "GET",
+                url: "",
+                data: {
+                    appointment: appointment,
+                    uesr_id: context?.user.user_id,
+                },
+            }).catch((error: AxiosError<string>) => {
+                console.log(error.response?.data);
+            });
         }
     };
 

@@ -11,7 +11,6 @@ export interface IAppointment {
     patient_id?: string;
     dentist_id: number; // fk
     cancel_date?: Date;
-    user_id: number;
     date: Date;
     duration: number; // minutes
     appointment_type: string;
