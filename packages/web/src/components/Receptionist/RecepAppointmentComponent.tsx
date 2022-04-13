@@ -78,7 +78,8 @@ export const RecepAppointmentComponent = (props: Props) => {
         ) {
             const appointment: IAppointment = {
                 user_id: selectedUserID,
-                start_date: startValue,
+                date: startValue,
+                duration: 60,
                 status: "incomplete",
                 appointment_type: procedure,
                 appointment_id: 0,

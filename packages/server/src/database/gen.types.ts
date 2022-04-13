@@ -9,12 +9,13 @@ export interface IReview {
 export interface IAppointment {
     fee_id?: string;
     patient_id?: string;
-    dentist_id: number;
+    dentist_id: number; // fk
     cancel_date?: Date;
     user_id: number;
-    start_date: Date;
-    end_time?: string;
-    status: string;
+    date: Date;
+    duration: number; // minutes
     appointment_type: string;
-    appointment_id: number; // idk
+    status: string;
+    appointment_id: number; // pk
+    procedure_id?: number; // fk
 }
