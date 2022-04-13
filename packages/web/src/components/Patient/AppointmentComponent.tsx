@@ -63,7 +63,7 @@ export const AppointmentComponent = (props: Props) => {
             const appointment: IAppointment = {
                 user_id: context?.user?.user_id,
                 start_date: startValue,
-                status: "pending",
+                status: "incomplete",
                 appointment_type: procedure,
                 appointment_id: 0,
                 dentist_id: selectedDentistID,
