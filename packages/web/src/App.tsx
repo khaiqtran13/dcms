@@ -1,4 +1,4 @@
-import { Button, Paper, ThemeProvider } from "@mui/material";
+import { Box, Button, Paper, ThemeProvider } from "@mui/material";
 import React, { useState } from "react";
 import { IUser } from "../../server/src/database/user.types";
 import "./App.css";
@@ -46,9 +46,14 @@ function App() {
     return (
         <ThemeProvider theme={darkTheme}>
             <AppContext.Provider value={appContext}>
-                <Paper className="h-screen" square>
+                <Box
+                    sx={{
+                        bgcolor: "background.default",
+                        color: "text.primary",
+                    }}
+                >
                     {contextUser ? <Homepage /> : <SignInSide />}
-                </Paper>
+                </Box>
             </AppContext.Provider>
         </ThemeProvider>
     );

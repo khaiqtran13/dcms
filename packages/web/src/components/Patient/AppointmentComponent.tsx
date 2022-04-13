@@ -6,6 +6,8 @@ import TimePicker from "@mui/lab/TimePicker";
 import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
 import {
     Button,
+    FormControl,
+    InputLabel,
     MenuItem,
     Paper,
     Select,
@@ -90,40 +92,41 @@ export const AppointmentComponent = (props: Props) => {
                         onChange={handleStartTimeChange}
                         renderInput={(params) => <TextField {...params} />}
                     />
-                    <Select
-                        labelId="procedure-label"
-                        id="procedure-label"
-                        title="Procedure"
-                        label="procedure-label"
-                        onChange={(event) => {
-                            setSelectedDentistID(Number(event.target.value));
-                        }}
-                    >
-                        {dentists?.map((d) => {
-                            return (
-                                <MenuItem value={d.user_id}>
-                                    Dr. {d.last_name}
-                                </MenuItem>
-                            );
-                        })}
-                    </Select>
-                    {/* TODO: fix this broken ass input label */}
-                    {/* <InputLabel id="procedure-label">Procedure</InputLabel> */}
-                    <Select
-                        labelId="procedure-label"
-                        id="procedure-label"
-                        title="Procedure"
-                        value={procedure}
-                        label="procedure-label"
-                        onChange={handleProcChange}
-                    >
-                        {/* TODO: get these from database instead */}
-                        <MenuItem value={"Fillings"}>Fillings</MenuItem>
-                        <MenuItem value={"Teeth Whitening"}>
-                            Teeth Whitening
-                        </MenuItem>
-                        <MenuItem value={"Extractions"}>Extractions</MenuItem>
-                    </Select>
+                    <FormControl>
+                        <InputLabel id="doctor-label">Doctor</InputLabel>
+                        <Select
+                            labelId="doctor-label"
+                            onChange={(event) => {
+                                setSelectedDentistID(
+                                    Number(event.target.value),
+                                );
+                            }}
+                        >
+                            {dentists?.map((d) => {
+                                return (
+                                    <MenuItem value={d.user_id}>
+                                        Dr. {d.last_name}
+                                    </MenuItem>
+                                );
+                            })}
+                        </Select>
+                    </FormControl>
+                    <FormControl>
+                        <InputLabel id="procedure-label">Procedure</InputLabel>
+                        <Select
+                            labelId="procedure-label"
+                            value={procedure}
+                            onChange={handleProcChange}
+                        >
+                            <MenuItem value={"Fillings"}>Fillings</MenuItem>
+                            <MenuItem value={"Teeth Whitening"}>
+                                Teeth Whitening
+                            </MenuItem>
+                            <MenuItem value={"Extractions"}>
+                                Extractions
+                            </MenuItem>
+                        </Select>
+                    </FormControl>
                     <Button
                         onClick={() => {
                             handleSubmit();
