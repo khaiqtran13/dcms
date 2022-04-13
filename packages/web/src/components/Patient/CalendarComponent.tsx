@@ -1,14 +1,7 @@
-import {
-    Button,
-    Card,
-    CardActions,
-    CardContent,
-    Divider,
-    Paper,
-    Stack,
-    Typography,
-} from "@mui/material";
+import { Card, CardContent, Divider, Paper, Stack } from "@mui/material";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { format } from "date-fns";
+import React from "react";
 import { IAppointment } from "../../../../server/src/database/gen.types";
 
 type Props = {};
@@ -37,6 +30,25 @@ const appointments: IAppointment[] = [
 ];
 
 export const CalendarComponent = (props: Props) => {
+    const [appointmentList, setAppointmentList] =
+        React.useState<IAppointment[]>();
+
+    React.useState(() => {
+        axios({
+            method: "GET",
+            url: "http://localhost:8000/api/appointments",
+        })
+            .then((response: AxiosResponse) => {
+                // TODO: get backend to give only user specific appointments
+                const fetchedAppointmentList = response.data;
+                setAppointmentList(fetchedAppointmentList);
+                console.log(fetchedAppointmentList);
+            })
+            .catch((error: AxiosError<string>) => {
+                console.log(error.response?.data);
+            });
+    });
+
     return (
         <Paper className="w-96 p-8 mx-auto" elevation={8}>
             <h1 className="text-2xl font-semibold mb-4">

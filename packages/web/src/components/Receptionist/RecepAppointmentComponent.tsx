@@ -20,13 +20,15 @@ import { AppContext, IAppContext } from "../../AppContext";
 
 type Props = {};
 
-export const AppointmentComponent = (props: Props) => {
+export const RecepAppointmentComponent = (props: Props) => {
     const [startValue, setStartValue] = React.useState<Date | null>(new Date());
     const [endValue, setEndValue] = React.useState<Date | null>(new Date());
     const [procedure, setProcedure] = React.useState<string>("");
     const [selectedDentistID, setSelectedDentistID] = React.useState<number>();
+    const [selectedUserID, setSelectedUserID] = React.useState<number>();
 
     const [dentists, setDentists] = React.useState<IUser[]>();
+    const [users, setUsers] = React.useState<IUser[]>();
 
     const context: IAppContext | null = React.useContext(AppContext);
 
@@ -37,6 +39,21 @@ export const AppointmentComponent = (props: Props) => {
     const handleProcChange = (event: SelectChangeEvent) => {
         setProcedure(event.target.value as string);
     };
+
+    React.useEffect(() => {
+        axios({
+            method: "GET",
+            url: "http://localhost:8000/api/user",
+        })
+            .then((response: AxiosResponse) => {
+                const fetchedUsers = response.data;
+                setUsers(fetchedUsers);
+            })
+            .catch((error: AxiosError<string>) => {
+                console.log(error.response?.data);
+            });
+    }, []);
+
     React.useEffect(() => {
         axios({
             method: "GET",
@@ -45,7 +62,6 @@ export const AppointmentComponent = (props: Props) => {
             .then((response: AxiosResponse) => {
                 const fetchedDentists = response.data;
                 setDentists(fetchedDentists);
-                console.log(dentists);
             })
             .catch((error: AxiosError<string>) => {
                 console.log(error.response?.data);
@@ -58,10 +74,10 @@ export const AppointmentComponent = (props: Props) => {
             endValue &&
             procedure &&
             selectedDentistID &&
-            context?.user?.user_id
+            selectedUserID
         ) {
             const appointment: IAppointment = {
-                user_id: context?.user?.user_id,
+                user_id: selectedUserID,
                 start_date: startValue,
                 status: "incomplete",
                 appointment_type: procedure,
@@ -106,6 +122,23 @@ export const AppointmentComponent = (props: Props) => {
                                 return (
                                     <MenuItem value={d.user_id}>
                                         Dr. {d.last_name}
+                                    </MenuItem>
+                                );
+                            })}
+                        </Select>
+                    </FormControl>
+                    <FormControl>
+                        <InputLabel id="user-label">Patient</InputLabel>
+                        <Select
+                            labelId="user-label"
+                            onChange={(event) => {
+                                setSelectedUserID(Number(event.target.value));
+                            }}
+                        >
+                            {users?.map((u) => {
+                                return (
+                                    <MenuItem value={u.user_id}>
+                                        {u.first_name} {u.last_name}
                                     </MenuItem>
                                 );
                             })}

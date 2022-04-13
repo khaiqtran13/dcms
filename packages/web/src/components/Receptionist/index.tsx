@@ -1,9 +1,9 @@
-import React from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import AddEmployeeComponent from "./AddEmployeeComponent";
 import AddPatient from "./AddPatient";
 import AddPatientComponent from "./AddPatientComponent";
 import EditPatient from "./EditPatient";
+import { RecepAppointmentComponent } from "./RecepAppointmentComponent";
 import ReceptionistHome from "./ReceptionistHome";
 import SetPatient from "./SetPatient";
 
@@ -12,9 +12,10 @@ type Props = {};
 const ReceptionistMain = (props: Props) => {
     return (
         <BrowserRouter>
-            <span className="flex">
+            <span className="flex flex-wrap">
                 <AddPatientComponent />
                 <AddEmployeeComponent />
+                <RecepAppointmentComponent />
             </span>
             <Routes>
                 <Route path="/" element={<ReceptionistHome />}></Route>

@@ -1,12 +1,4 @@
-import {
-    Button,
-    MenuItem,
-    Paper,
-    Rating,
-    Select,
-    SelectChangeEvent,
-    Typography,
-} from "@mui/material";
+import { Button, Paper, Rating, Typography } from "@mui/material";
 import { IReview } from "../../../../server/src/database/gen.types";
 import React from "react";
 import { AppContext, IAppContext } from "../../AppContext";
