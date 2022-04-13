@@ -3,46 +3,30 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import { format } from "date-fns";
 import React from "react";
 import { IAppointment } from "../../../../server/src/database/gen.types";
+import { AppContext, IAppContext } from "../../AppContext";
 
 type Props = {};
 
-const appointments: IAppointment[] = [
-    {
-        user_id: 0,
-        start_date: new Date(),
-        end_time: "10:00",
-        status: "string",
-        cancel_date: new Date(),
-        appointment_type: "Appointment",
-        appointment_id: 1, // idk,
-        dentist_id: 0,
-    },
-    {
-        user_id: 0,
-        start_date: new Date(),
-        end_time: "6:00",
-        status: "string",
-        cancel_date: new Date(),
-        appointment_type: "Appointment",
-        appointment_id: 1, // idk,
-        dentist_id: 0,
-    },
-];
-
 export const CalendarComponent = (props: Props) => {
-    const [appointmentList, setAppointmentList] =
-        React.useState<IAppointment[]>();
+    const [appointmentList, setAppointmentList] = React.useState<
+        IAppointment[]
+    >([]);
+
+    const context: IAppContext | null = React.useContext(AppContext);
+    const [loading, setLoading] = React.useState<boolean>(true);
+
+    const user_id = context?.user?.user_id;
 
     React.useState(() => {
         axios({
             method: "GET",
-            url: "http://localhost:8000/api/appointments",
+            url: `http://localhost:8000/api/appointments/${user_id}`,
         })
             .then((response: AxiosResponse) => {
-                // TODO: get backend to give only user specific appointments
                 const fetchedAppointmentList = response.data;
                 setAppointmentList(fetchedAppointmentList);
-                console.log(fetchedAppointmentList);
+                console.log("fetched", fetchedAppointmentList);
+                setLoading(false);
             })
             .catch((error: AxiosError<string>) => {
                 console.log(error.response?.data);
@@ -51,27 +35,38 @@ export const CalendarComponent = (props: Props) => {
 
     return (
         <Paper className="w-96 p-8 mx-auto" elevation={8}>
-            <h1 className="text-2xl font-semibold mb-4">
-                Upcoming Appointments
-            </h1>
+            <h1 className="text-2xl font-semibold mb-4">Appointments</h1>
             <Stack spacing={3}>
-                {appointments.map((apt) => {
-                    return (
-                        <Card>
-                            <CardContent>
-                                <p className="text-xl font-semibold">
-                                    {apt.appointment_type}
-                                </p>
-                                <Divider className="py-1" />
-                                <p>
-                                    Date:{" "}
-                                    {format(apt.start_date, "MMMM do, yyyy")}
-                                </p>
-                                <p>Time: {format(apt.start_date, "H:mma")}</p>
-                            </CardContent>
-                        </Card>
-                    );
-                })}
+                {!loading &&
+                    appointmentList.length !== 0 &&
+                    appointmentList.map((apt: IAppointment) => {
+                        return (
+                            <Card>
+                                <CardContent>
+                                    <Stack spacing={1}>
+                                        <p className="text-xl font-semibold">
+                                            {apt.appointment_type}
+                                        </p>
+                                        <Divider />
+                                        <p>
+                                            Date:{" "}
+                                            {format(
+                                                new Date(apt.date),
+                                                "MMMM do, yyyy",
+                                            )}
+                                        </p>
+                                        <p>
+                                            Time:{" "}
+                                            {format(
+                                                new Date(apt.date),
+                                                "H:mma",
+                                            )}
+                                        </p>
+                                    </Stack>
+                                </CardContent>
+                            </Card>
+                        );
+                    })}
             </Stack>
         </Paper>
     );

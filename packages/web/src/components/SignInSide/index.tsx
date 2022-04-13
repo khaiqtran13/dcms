@@ -46,7 +46,7 @@ function Copyright(props: any) {
             {"Copyright © "}
             <Link
                 color="inherit"
-                href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" // TODO: Can someone please verify if our copyright is cited correctly here?
             >
                 DCMS
             </Link>{" "}
