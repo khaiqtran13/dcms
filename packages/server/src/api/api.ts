@@ -1,14 +1,17 @@
 import express from "express";
 import {
-    getAppointmentByPatientId,
-    getAppointments,
-    getDentists,
-    getLogin,
-    getPatientRecordById,
-    getPatients,
-    getRecords,
-    getUserById,
-    getUsers,
+  addPatient,
+  editPatient,
+  setAppointment,
+  getAppointmentByPatientId,
+  getAppointments,
+  getDentists,
+  getLogin,
+  getPatientRecordById,
+  getPatients,
+  getRecords,
+  getUserById,
+  getUsers,
 } from "../endpoints/endpoints";
 
 const apiRouter = express.Router();
@@ -20,20 +23,28 @@ you can add multiple functions
 ex: apiRouter.post("/password/sendcode", isLoggedOut, requestPasswordResetCode);
 */
 
-// user
 apiRouter.get("/", (req: any, res: any) => res.send(req));
+
+// user
 apiRouter.get("/user", getUsers);
 apiRouter.get("/user/dentists", getDentists);
+apiRouter.post("/user/add", addPatient);
+apiRouter.post("/user/edit/:user_id", editPatient);
 apiRouter.get("/user/:user_id", getUserById);
+
+// login
 apiRouter.post("/login", getLogin);
+
+//patients
 apiRouter.get("/patients", getPatients);
+
+//records
 apiRouter.get("/records", getRecords);
+apiRouter.get("/records/:user_id", getPatientRecordById);
 
-// patient
-apiRouter.get("/records/:user_id", getPatientRecordById)
+//appointments
 apiRouter.get("/appointments", getAppointments);
+apiRouter.post("/appointments/set/", setAppointment);
 apiRouter.get("/appointments/:user_id", getAppointmentByPatientId);
-
-
 
 export default apiRouter;
