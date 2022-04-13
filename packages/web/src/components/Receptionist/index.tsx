@@ -4,6 +4,7 @@ import AddEmployeeComponent from "./AddEmployeeComponent";
 import AddPatient from "./AddPatient";
 import AddPatientComponent from "./AddPatientComponent";
 import EditPatient from "./EditPatient";
+import { RecepAppointmentComponent } from "./RecepAppointmentComponent";
 import ReceptionistHome from "./ReceptionistHome";
 import SetPatient from "./SetPatient";
 
@@ -13,8 +14,9 @@ const ReceptionistMain = (props: Props) => {
     return (
         <BrowserRouter>
             <span className="flex">
-                <AddPatientComponent />
-                <AddEmployeeComponent />
+                {/* <AddPatientComponent /> */}
+                {/* <AddEmployeeComponent /> */}
+                <RecepAppointmentComponent />
             </span>
             <Routes>
                 <Route path="/" element={<ReceptionistHome />}></Route>

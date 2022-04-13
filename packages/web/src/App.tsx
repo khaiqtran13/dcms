@@ -48,6 +48,8 @@ function App() {
             <AppContext.Provider value={appContext}>
                 <Box
                     sx={{
+                        flexGrow: 1,
+                        minHeight: "100vh",
                         bgcolor: "background.default",
                         color: "text.primary",
                     }}
