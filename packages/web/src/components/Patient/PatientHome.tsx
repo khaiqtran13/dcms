@@ -1,6 +1,7 @@
 import React from "react";
 import { AppointmentComponent } from "./AppointmentComponent";
 import { CalendarComponent } from "./CalendarComponent";
+import RecordAppointment from "./RecordAppointment";
 import { ReviewComponent } from "./ReviewComponent";
 
 type Props = {};
@@ -10,6 +11,7 @@ const PatientHome = (props: Props) => (
         <AppointmentComponent />
         <ReviewComponent />
         <CalendarComponent />
+        <RecordAppointment />
     </div>
 );
 
