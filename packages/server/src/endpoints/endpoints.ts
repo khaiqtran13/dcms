@@ -39,20 +39,18 @@ export const getLogin = async (
   req: express.Request<{ user_id: number; password: string }>,
   res: express.Response
 ) => {
-  try {
-    // const { user_id, password } = req.body;
-    const user_id = req.body.user_id;
-    const password = req.body.password;
-    // console.log(user_id, password);
-    const user = await client.query(
-      `SELECT * FROM public.user WHERE user_id = ${user_id} AND password = ${password}`
-    );
-    // console.log(user.rows);
-    // console.log(res.status(200).json(user.rows));
-    return res.status(200).json(user.rows);
-  } catch (err: any) {
-    console.error(err.message);
-  }
+    try {
+        // const { user_id, password } = req.body;
+        const user_id = req.body.user_id;
+        const password = req.body.password;
+        // console.log(user_id, password);
+        const user = await client.query(
+            `SELECT * FROM public.user WHERE user_id = ${user_id} AND password = ${password}`,
+        );
+        return res.status(200).json(user.rows);
+    } catch (err: any) {
+        console.error(err.message);
+    }
 };
 
 // We are going to need to access patient data as well as edit
@@ -68,17 +66,32 @@ export const getPatients = async (
   }
 };
 
-// We will need to be able to view patient's records
+// Can be called by anyone to view a patient's records
 export const getRecords = async (
   req: express.Request,
   res: express.Response
 ) => {
   try {
     const records = await client.query("SELECT * FROM public.records");
-    res.json(records.rows);
+    return res.status(200).json(records.rows);
   } catch (err: any) {
     console.error(err.message);
   }
+};
+
+
+// Can be called by a patient to view their own records
+export const getPatientRecordById = async (
+    req: express.Request,
+    res: express.Response,
+) => {
+    try {
+        const {user_id} = req.params;
+        const records = await client.query(`SELECT * FROM public.records WHERE patient_id = (SELECT patient_id FROM public.patients WHERE user_id = ${user_id})`);
+        return res.status(200).json(records.rows);
+    } catch (err: any) {
+        console.error(err.message);
+    }
 };
 
 // We will need to be able to set and view appointments
@@ -86,14 +99,13 @@ export const getAppointments = async (
   req: express.Request,
   res: express.Response
 ) => {
-  try {
-    const appointments = await client.query(
-      "SELECT * FROM public.appointments"
-    );
-    res.json(appointments.rows);
-  } catch (err: any) {
-    console.error(err.message);
-  }
+    try {
+        const appointments = await client.query(
+            `SELECT * FROM public.appointments`);
+        res.json(appointments.rows);
+    } catch (err: any) {
+        console.error(err.message);
+    }
 };
 
 export const getDentists = async (
@@ -108,4 +120,19 @@ export const getDentists = async (
   } catch (err: any) {
     console.error(err.message);
   }
+};
+
+export const getAppointmentByPatientId = async (
+    req: express.Request,
+    res: express.Response,
+) => {
+    try {
+        const {user_id} = req.params;
+        console.log(user_id);
+        const appointments = await client.query(
+            `SELECT * FROM public.appointments WHERE patient_id = (SELECT patient_id FROM public.patients WHERE user_id = ${user_id})`);
+        return res.status(200).json(appointments.rows);
+          } catch (err: any) {
+        console.error(err.message);
+    }
 };

@@ -1,12 +1,14 @@
 import express from "express";
 import {
-  getAppointments,
-  getDentists,
-  getLogin,
-  getPatients,
-  getRecords,
-  getUserById,
-  getUsers,
+    getAppointmentByPatientId,
+    getAppointments,
+    getDentists,
+    getLogin,
+    getPatientRecordById,
+    getPatients,
+    getRecords,
+    getUserById,
+    getUsers,
 } from "../endpoints/endpoints";
 
 const apiRouter = express.Router();
@@ -26,6 +28,12 @@ apiRouter.get("/user/:user_id", getUserById);
 apiRouter.post("/login", getLogin);
 apiRouter.get("/patients", getPatients);
 apiRouter.get("/records", getRecords);
+
+// patient
+apiRouter.get("/records/:user_id", getPatientRecordById)
 apiRouter.get("/appointments", getAppointments);
+apiRouter.get("/appointments/:user_id", getAppointmentByPatientId);
+
+
 
 export default apiRouter;
