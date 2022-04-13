@@ -24,10 +24,10 @@ const hue = keyframes`
 `;
 const AnimatedGradientText = styled.h1`
     color: #f35626;
-    background-image: -webkit-linear-gradient(92deg, #f35626, #feab3a);
+    background-image: -webkit-linear-gradient(69deg, #f35626, #feab3a);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    -webkit-animation: ${hue} 69s infinite linear;
+    -webkit-animation: ${hue} 25s infinite linear;
     font-size: 169px;
     font-weight: 700;
     overflow-wrap: break-word;
@@ -142,12 +142,6 @@ const SignInSide = () => {
                             onChange={(event) =>
                                 setPassword(event.target.value)
                             }
-                        />
-                        <FormControlLabel
-                            control={
-                                <Checkbox value="remember" color="primary" />
-                            }
-                            label="Remember me"
                         />
                         <Button
                             type="submit"
