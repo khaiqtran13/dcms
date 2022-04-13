@@ -6,7 +6,7 @@ import { AppContext, IAppContext } from "../../AppContext";
 
 type Props = {};
 
-export default function RecordAppointment({}: Props) {
+export default function MedicalHistoryComponent({}: Props) {
     const context: IAppContext | null = React.useContext(AppContext);
     const [record, setRecord] = React.useState<IRecord>();
     const [loading, setLoading] = React.useState<boolean>(true);
@@ -29,7 +29,7 @@ export default function RecordAppointment({}: Props) {
             });
     });
     return (
-        <Paper className="w-96 p-8 mx-auto" elevation={8}>
+        <Paper className="w-96 p-8" elevation={8}>
             <h1 className="text-2xl font-semibold mb-4">Medical History</h1>
             <Stack spacing={3}>
                 <Card>

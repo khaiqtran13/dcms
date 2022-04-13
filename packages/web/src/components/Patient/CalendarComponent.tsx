@@ -34,7 +34,7 @@ export const CalendarComponent = (props: Props) => {
     });
 
     return (
-        <Paper className="w-96 p-8 mx-auto" elevation={8}>
+        <Paper className="w-96 p-8 mx-2" elevation={8}>
             <h1 className="text-2xl font-semibold mb-4">Appointments</h1>
             <Stack spacing={3}>
                 {!loading &&
