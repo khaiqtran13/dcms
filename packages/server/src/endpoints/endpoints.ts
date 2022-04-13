@@ -220,25 +220,27 @@ export const getAppointmentByPatientId = async (
 //Sets an appointment based on IAppointment and user_id
 export const setAppointment = async (
   req: express.Request<{
-    new_app: IAppointment;
+    appointment: IAppointment;
     user_id: number;
   }>,
   res: express.Response
 ) => {
   try {
-    var new_app: IAppointment = req.body.new_app;
+    var appointment: IAppointment = req.body.appointment;
     var user_id: number = req.body.user_id;
 
     const patient_query = await client.query(
       `SELECT public.patients.patient_id FROM public.patients WHERE user_id = ${user_id}`
     );
 
-    new_app.patient_id = patient_query.rows[0];
+    appointment.patient_id = patient_query.rows[0];
 
-    if (new_app.appointment_id == 0) {
+    if (appointment.appointment_id == 0) {
       let max = 9999;
       let min = 100;
-      new_app.appointment_id = Math.floor(Math.random() * (max - min) + min);
+      appointment.appointment_id = Math.floor(
+        Math.random() * (max - min) + min
+      );
     }
 
     const appointment_insert = await client.query(
@@ -246,9 +248,9 @@ export const setAppointment = async (
       (fee_id, patient_id, dentist_id, cancel_date, date, duration, appointment_type, status,
         appointment_id, procedure_id)
       VALUES
-      (${new_app.fee_id}, ${new_app.patient_id}, ${new_app.dentist_id}, ${new_app.cancel_date},
-        ${new_app.date}, ${new_app.duration}, ${new_app.appointment_type}, ${new_app.status},
-        ${new_app.appointment_id}, ${new_app.procedure_id})`
+      (${appointment.fee_id}, ${appointment.patient_id}, ${appointment.dentist_id}, ${appointment.cancel_date},
+        ${appointment.date}, ${appointment.duration}, ${appointment.appointment_type}, ${appointment.status},
+        ${appointment.appointment_id}, ${appointment.procedure_id})`
     );
 
     return res.status(201);
