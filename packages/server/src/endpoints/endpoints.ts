@@ -73,25 +73,12 @@ export const getRecords = async (
 ) => {
   try {
     const records = await client.query("SELECT * FROM public.records");
-    res.json(records.rows);
+    return res.status(200).json(records.rows);
   } catch (err: any) {
     console.error(err.message);
   }
 };
 
-// Can be called by a patient to view their own records
-export const getPatientRecords = async (
-    req: express.Request,
-    res: express.Response,
-) => {
-    try {
-        const {patient_id} = req.params;
-        const records = await client.query(`SELECT * FROM public.records`);
-        return res.status(200).json(records.rows);
-    } catch (err: any) {
-        console.error(err.message);
-    }
-};
 
 // Can be called by a patient to view their own records
 export const getPatientRecordById = async (

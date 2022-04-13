@@ -5,7 +5,6 @@ import {
     getDentists,
     getLogin,
     getPatientRecordById,
-    getPatientRecords,
     getPatients,
     getRecords,
     getUserById,
@@ -31,8 +30,7 @@ apiRouter.get("/patients", getPatients);
 apiRouter.get("/records", getRecords);
 
 // patient
-apiRouter.get("/patient_records", getPatientRecords);
-apiRouter.get("/patient_records/:patient_id", getPatientRecordById)
+apiRouter.get("/records/:patient_id", getPatientRecordById)
 apiRouter.get("/appointments", getAppointments);
 apiRouter.get("/appointments/:patient_id", getAppointmentByPatientId);
 
