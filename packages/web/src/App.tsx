@@ -1,4 +1,4 @@
-import { Box, Button, Paper, ThemeProvider } from "@mui/material";
+import { Box, ThemeProvider } from "@mui/material";
 import React, { useState } from "react";
 import { IUser } from "../../server/src/database/user.types";
 import "./App.css";
