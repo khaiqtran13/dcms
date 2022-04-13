@@ -44,7 +44,7 @@ apiRouter.get("/records/:user_id", getPatientRecordById);
 
 //appointments
 apiRouter.get("/appointments", getAppointments);
-apiRouter.post("/appointments/set/:user_id", setAppointment);
+apiRouter.post("/appointments/set/", setAppointment);
 apiRouter.get("/appointments/:user_id", getAppointmentByPatientId);
 
 export default apiRouter;
