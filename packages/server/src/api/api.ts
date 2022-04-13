@@ -30,9 +30,9 @@ apiRouter.get("/patients", getPatients);
 apiRouter.get("/records", getRecords);
 
 // patient
-apiRouter.get("/records/:patient_id", getPatientRecordById)
+apiRouter.get("/records/:user_id", getPatientRecordById)
 apiRouter.get("/appointments", getAppointments);
-apiRouter.get("/appointments/:patient_id", getAppointmentByPatientId);
+apiRouter.get("/appointments/:user_id", getAppointmentByPatientId);
 
 
 

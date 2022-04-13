@@ -86,8 +86,8 @@ export const getPatientRecordById = async (
     res: express.Response,
 ) => {
     try {
-        const {patient_id} = req.params;
-        const records = await client.query(`SELECT * FROM public.records WHERE patient_id = ${patient_id}`);
+        const {user_id} = req.params;
+        const records = await client.query(`SELECT * FROM public.records WHERE patient_id = (SELECT patient_id FROM public.patients WHERE user_id = ${user_id})`);
         return res.status(200).json(records.rows);
     } catch (err: any) {
         console.error(err.message);
@@ -100,7 +100,6 @@ export const getAppointments = async (
   res: express.Response
 ) => {
     try {
-        const {patient_id} = req.params;
         const appointments = await client.query(
             `SELECT * FROM public.appointments`);
         res.json(appointments.rows);
@@ -128,11 +127,12 @@ export const getAppointmentByPatientId = async (
     res: express.Response,
 ) => {
     try {
-        const {patient_id} = req.params;
+        const {user_id} = req.params;
+        console.log(user_id);
         const appointments = await client.query(
-            `SELECT * FROM public.appointments WHERE patient_id = ${patient_id}`);
-        res.json(appointments.rows);
-    } catch (err: any) {
+            `SELECT * FROM public.appointments WHERE patient_id = (SELECT patient_id FROM public.patients WHERE user_id = ${user_id})`);
+        return res.status(200).json(appointments.rows);
+          } catch (err: any) {
         console.error(err.message);
     }
 };
