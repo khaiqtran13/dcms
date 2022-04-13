@@ -75,7 +75,7 @@ const AddPatientComponent: React.FC = ({}: Props) => {
                 gender: gender,
                 insurance: insurance,
                 email_address: email,
-                DOB: DOB,
+                date_of_birth: DOB,
                 payment_id: undefined,
                 record_id: undefined,
                 user_id: 0,

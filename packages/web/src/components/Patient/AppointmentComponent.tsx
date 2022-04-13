@@ -82,7 +82,7 @@ export const AppointmentComponent = (props: Props) => {
     };
 
     return (
-        <Paper className="w-96 p-8 mx-auto" elevation={8}>
+        <Paper className="w-96 p-8" elevation={8}>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <div className="flex flex-col space-y-4 mx-auto">
                     <h1 className="text-2xl font-semibold mb-4">

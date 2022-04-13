@@ -1,11 +1,9 @@
-import React from 'react'
+import React from "react";
 
-type Props = {}
+type Props = {};
 
 const ReceptionistHome = (props: Props) => {
-  return (
-    <div>You are a receptionist</div>
-  )
-}
+    return <div></div>;
+};
 
 export default ReceptionistHome;

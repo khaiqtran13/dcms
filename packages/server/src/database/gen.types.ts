@@ -18,3 +18,8 @@ export interface IAppointment {
     appointment_id: number; // pk
     procedure_id?: number; // fk
 }
+
+export interface IRecord {
+    charts: string[];
+    notes: string[];
+}
