@@ -16,98 +16,98 @@ what're chances the prof checks
 */
 
 export const getUsers = async (req: express.Request, res: express.Response) => {
-    try {
-        const users = await client.query("SELECT * FROM public.user");
-        res.json(users.rows);
-    } catch (err: any) {
-        console.error(err.message);
-    }
+  try {
+    const users = await client.query("SELECT * FROM public.user");
+    res.json(users.rows);
+  } catch (err: any) {
+    console.error(err.message);
+  }
 };
 
 export const getUserById = async (req: express.Request, res: any) => {
-    try {
-        const { user_id } = req.params;
-        const user = await client.query(
-            `SELECT * FROM public.user WHERE user_id = ${user_id}`,
-        );
-        res.json(user.rows[0]);
-    } catch (err: any) {
-        console.error(err.message);
-    }
+  try {
+    const { user_id } = req.params;
+    const user = await client.query(
+      `SELECT * FROM public.user WHERE user_id = ${user_id}`
+    );
+    res.json(user.rows[0]);
+  } catch (err: any) {
+    console.error(err.message);
+  }
 };
 
 // takes user_id and password and autheticates user
 export const getLogin = async (
-    req: express.Request<{ user_id: number; password: string }>,
-    res: express.Response,
+  req: express.Request<{ user_id: number; password: string }>,
+  res: express.Response
 ) => {
-    try {
-        const user_id = req.body.user_id;
-        const password = req.body.password;
-        const user = await client.query(
-            `SELECT * FROM public.user WHERE user_id = ${user_id} AND password = ${password}`,
-        );
-        return res.status(200).json(user.rows);
-    } catch (err: any) {
-        console.error(err.message);
-    }
+  try {
+    const user_id = req.body.user_id;
+    const password = req.body.password;
+    const user = await client.query(
+      `SELECT * FROM public.user WHERE user_id = ${user_id} AND password = ${password}`
+    );
+    return res.status(200).json(user.rows);
+  } catch (err: any) {
+    console.error(err.message);
+  }
 };
 
 // We are going to need to access patient data as well as edit
 export const getPatients = async (
-    req: express.Request,
-    res: express.Response,
+  req: express.Request,
+  res: express.Response
 ) => {
-    try {
-        const patients = await client.query("SELECT * FROM public.patients");
-        res.json(patients.rows);
-    } catch (err: any) {
-        console.error(err.message);
-    }
+  try {
+    const patients = await client.query("SELECT * FROM public.patients");
+    res.json(patients.rows);
+  } catch (err: any) {
+    console.error(err.message);
+  }
 };
 
 // Can be called by anyone to view a patient's records
 export const getRecords = async (
-    req: express.Request,
-    res: express.Response,
+  req: express.Request,
+  res: express.Response
 ) => {
-    try {
-        const records = await client.query("SELECT * FROM public.records");
-        return res.status(200).json(records.rows);
-    } catch (err: any) {
-        console.error(err.message);
-    }
+  try {
+    const records = await client.query("SELECT * FROM public.records");
+    return res.status(200).json(records.rows);
+  } catch (err: any) {
+    console.error(err.message);
+  }
 };
 
 // Can be called by a patient to view their own records
 export const getPatientRecordById = async (
-    req: express.Request,
-    res: express.Response,
+  req: express.Request,
+  res: express.Response
 ) => {
-    try {
-        const { user_id } = req.params;
-        const records = await client.query(
-            `SELECT * FROM public.records WHERE patient_id = (SELECT patient_id FROM public.patients WHERE user_id = ${user_id})`,
-        );
-        return res.status(200).json(records.rows);
-    } catch (err: any) {
-        console.error(err.message);
-    }
+  try {
+    const { user_id } = req.params;
+    const records = await client.query(
+      `SELECT * FROM public.records WHERE patient_id = (SELECT patient_id FROM public.patients WHERE user_id = ${user_id})`
+    );
+    return res.status(200).json(records.rows);
+  } catch (err: any) {
+    console.error(err.message);
+  }
 };
 
 // We will need to be able to set and view appointments
 export const getAppointments = async (
-    req: express.Request,
-    res: express.Response,
+  req: express.Request,
+  res: express.Response
 ) => {
-    try {
-        const appointments = await client.query(
-            `SELECT * FROM public.appointments`,
-        );
-        res.json(appointments.rows);
-    } catch (err: any) {
-        console.error(err.message);
-    }
+  try {
+    const appointments = await client.query(
+      `SELECT * FROM public.appointments`
+    );
+    res.json(appointments.rows);
+  } catch (err: any) {
+    console.error(err.message);
+  }
 };
 
 //Adds the user to the database
@@ -184,32 +184,32 @@ export const editPatient = async (
 };
 
 export const getDentists = async (
-    req: express.Request,
-    res: express.Response,
+  req: express.Request,
+  res: express.Response
 ) => {
-    try {
-        const users = await client.query(
-            "SELECT * FROM public.user WHERE public.user.role = 'Dentist'",
-        );
-        res.json(users.rows);
-    } catch (err: any) {
-        console.error(err.message);
-    }
+  try {
+    const users = await client.query(
+      "SELECT * FROM public.user WHERE public.user.role = 'Dentist'"
+    );
+    res.json(users.rows);
+  } catch (err: any) {
+    console.error(err.message);
+  }
 };
 
 export const getAppointmentByPatientId = async (
-    req: express.Request,
-    res: express.Response,
+  req: express.Request,
+  res: express.Response
 ) => {
-    try {
-        const { user_id } = req.params;
-        const appointments = await client.query(
-            `SELECT * FROM public.appointments WHERE patient_id = (SELECT patient_id FROM public.patients WHERE user_id = ${user_id})`,
-        );
-        return res.status(200).json(appointments.rows);
-    } catch (err: any) {
-        console.error(err.message);
-    }
+  try {
+    const { user_id } = req.params;
+    const appointments = await client.query(
+      `SELECT * FROM public.appointments WHERE patient_id = (SELECT patient_id FROM public.patients WHERE user_id = ${user_id})`
+    );
+    return res.status(200).json(appointments.rows);
+  } catch (err: any) {
+    console.error(err.message);
+  }
 };
 
 export const setAppointment = async (
@@ -238,12 +238,12 @@ export const setAppointment = async (
     //FIX THIS WHEN POSSIBLE
     const appointment_insert = await client.query(
       `INSERT INTO public.appointments
-      (fee_id, patient_id, dentist_id, user_id, startDate, endDate, status, cancelDate,
-      appointment_type, appointment_id)
+      (fee_id, patient_id, dentist_id, cancel_date, date, duration, appointment_type, status,
+        appointment_id, procedure_id)
       VALUES
-      (${new_app.fee_id}, ${new_app.patient_id}, ${new_app.dentist_id}, ${new_app.user_id},
-      ${new_app.start_date}, ${new_app.end_time}, ${new_app.status}, ${new_app.status}, ${new_app.cancel_date},
-      ${new_app.appointment_type}, ${new_app.appointment_id})`
+      (${new_app.fee_id}, ${new_app.patient_id}, ${new_app.dentist_id}, ${new_app.cancel_date},
+        ${new_app.date}, ${new_app.duration}, ${new_app.appointment_type}, ${new_app.status},
+        ${new_app.appointment_id}, ${new_app.procedure_id})`
     );
 
     return res.status(201);
