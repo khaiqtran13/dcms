@@ -1,10 +1,8 @@
 import { Button, Dialog, DialogContent, Slide } from "@mui/material";
-import { TransitionProps } from "@mui/material/transitions";
 import React from "react";
 import { AppointmentComponent } from "./AppointmentComponent";
 import { CalendarComponent } from "./CalendarComponent";
 import MedicalHistoryComponent from "./MedicalHistoryComponent";
-import RecordAppointment from "./MedicalHistoryComponent";
 import { ReviewComponent } from "./ReviewComponent";
 
 type Props = {};
@@ -15,7 +13,6 @@ const PatientHome = (props: Props) => {
     const [openRA, setOpenRA] = React.useState(false);
     const [openCC, setOpenCC] = React.useState(false);
 
-    console.log("open", openBA);
     return (
         <div className="flex flex-col mx-auto place-content-center space-y-4 h-screen w-96">
             TODO: make this a drawer or make it prettier idk

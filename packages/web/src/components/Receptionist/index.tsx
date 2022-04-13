@@ -1,3 +1,5 @@
+import { Button, Dialog } from "@mui/material";
+import React from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import AddEmployeeComponent from "./AddEmployeeComponent";
 import AddPatient from "./AddPatient";
@@ -10,19 +12,68 @@ import SetPatient from "./SetPatient";
 type Props = {};
 
 const ReceptionistMain = (props: Props) => {
+    const [openAP, setOpenAP] = React.useState(false);
+    const [openAE, setOpenAE] = React.useState(false);
+    const [openRA, setOpenRA] = React.useState(false);
+
     return (
         <BrowserRouter>
-            <span className="flex flex-wrap">
-                <AddPatientComponent />
-                <AddEmployeeComponent />
-                <RecepAppointmentComponent />
-            </span>
+            <div className="flex flex-col mx-auto place-content-center space-y-4 h-screen w-96">
+                TODO: make this a drawer or make it prettier idk
+                <Button
+                    fullWidth
+                    variant="contained"
+                    onClick={() => {
+                        setOpenAP(true);
+                    }}
+                >
+                    🧑‍⚕️ Add Patient
+                </Button>
+                <Dialog
+                    open={openAP}
+                    onClose={() => {
+                        setOpenAP(false);
+                    }}
+                >
+                    <AddPatientComponent />
+                </Dialog>
+                <Button
+                    fullWidth
+                    variant="contained"
+                    onClick={() => {
+                        setOpenAE(true);
+                    }}
+                >
+                    👨‍💻 Add Employee
+                </Button>
+                <Dialog
+                    open={openAE}
+                    onClose={() => {
+                        setOpenAE(false);
+                    }}
+                >
+                    <AddEmployeeComponent />
+                </Dialog>
+                <Button
+                    fullWidth
+                    variant="contained"
+                    onClick={() => {
+                        setOpenRA(true);
+                    }}
+                >
+                    📕 Book Appointment
+                </Button>
+                <Dialog
+                    open={openRA}
+                    onClose={() => {
+                        setOpenRA(false);
+                    }}
+                >
+                    <RecepAppointmentComponent />
+                </Dialog>
+            </div>
             <Routes>
                 <Route path="/" element={<ReceptionistHome />}></Route>
-                <Route path="add" element={<AddPatient />}></Route>
-                <Route path="edit" element={<EditPatient />}></Route>
-                <Route path="set" element={<SetPatient />}></Route>
-                <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
         </BrowserRouter>
     );
