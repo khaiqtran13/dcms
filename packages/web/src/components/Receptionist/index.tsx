@@ -5,9 +5,11 @@ import AddEmployeeComponent from "./AddEmployeeComponent";
 import AddPatient from "./AddPatient";
 import AddPatientComponent from "./AddPatientComponent";
 import EditPatient from "./EditPatient";
+import EditPatientComponent from "./EditPatientComponent";
 import { RecepAppointmentComponent } from "./RecepAppointmentComponent";
 import ReceptionistHome from "./ReceptionistHome";
 import SetPatient from "./SetPatient";
+import ViewPatientComponent from "./ViewPatientComponent";
 
 type Props = {};
 
@@ -20,6 +22,8 @@ const ReceptionistMain = (props: Props) => {
         <BrowserRouter>
             <div className="flex flex-col mx-auto place-content-center space-y-4 h-screen w-96">
                 TODO: make this a drawer or make it prettier idk
+                {/* <EditPatientComponent /> */}
+                <ViewPatientComponent />
                 <Button
                     fullWidth
                     variant="contained"
