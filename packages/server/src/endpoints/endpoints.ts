@@ -120,27 +120,62 @@ export const addPatient = async (
     res: express.Response,
 ) => {
     try {
-        var new_user: IPatient = req.body.new_patient;
-        new_user.role = "User";
+        var user: IPatient = req.body.new_patient;
+        user.role = "User";
 
-        if (new_user.user_id == 0) {
+        if (user.user_id == 0) {
             let max = 9999999;
             let min = 1000100;
-            new_user.user_id = Math.floor(Math.random() * (max - min) + min);
-            new_user.patient_id = Math.floor(Math.random() * (max - min) + min);
+            user.user_id = Math.floor(Math.random() * (max - min) + min);
+            user.patient_id = Math.floor(Math.random() * (max - min) + min);
         }
 
-        const user = await client.query(
-            `INSERT INTO public.user (user.id, first_name, middle_name, last_name, street_address, city, province, password, role, ssn) 
-      VALUES (${new_user.first_name}, ${new_user.first_name}, ${new_user.middle_name}, ${new_user.last_name}, ${new_user.street_address},
-        ${new_user.city}, ${new_user.province}, ${new_user.password}, ${new_user.role}, ${new_user.ssn} ) `,
+        const user_queryInsert = {
+            text: `INSERT INTO public.user (user_id, first_name, middle_name, last_name, street_address, city, province, password, role, ssn) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
+            values: [
+                user.user_id,
+                user.first_name,
+                user.middle_name,
+                user.last_name,
+                user.street_address,
+                user.city,
+                user.province,
+                user.password,
+                user.role,
+                user.ssn,
+            ],
+        };
+
+        const patient_queryInsert = {
+            text: `INSERT INTO public.patients (patient_id, gender, insurance, email_address, date_of_birth, payment_ids, record_id, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+            values: [
+                user.patient_id,
+                user.gender,
+                user.insurance,
+                user.email_address,
+                user.date_of_birth,
+                user.payment_id,
+                user.record_id,
+                user.user_id,
+            ],
+        };
+
+        const user_query = await client.query(
+            //         `INSERT INTO public.user (user_id, first_name, middle_name, last_name, street_address, city, province, password, role, ssn)
+            //   VALUES (${new_user.first_name}, ${new_user.first_name}, ${new_user.middle_name}, ${new_user.last_name}, ${new_user.street_address},
+            //     ${new_user.city}, ${new_user.province}, ${new_user.password}, ${new_user.role}, ${new_user.ssn} ) `,
+            user_queryInsert.text,
+            user_queryInsert.values,
         );
 
-        const patient = await client.query(
-            `INSERT INTO public.patients (patient_id, gender, insurance, email_address, date_of_birth, payment_id, record_id, user_id) 
-        VALUES (${new_user.patient_id}, ${new_user.gender}, ${new_user.insurance}, ${new_user.email_address}, ${new_user.date_of_birth},
-            ${new_user.payment_id}, ${new_user.record_id}, ${new_user.user_id} ) `,
+        const patient_query = await client.query(
+            //     `INSERT INTO public.patients (patient_id, gender, insurance, email_address, date_of_birth, payment_id, record_id, user_id)
+            // VALUES (${new_user.patient_id}, ${new_user.gender}, ${new_user.insurance}, ${new_user.email_address}, ${new_user.date_of_birth},
+            //     ${new_user.payment_id}, ${new_user.record_id}, ${new_user.user_id} ) `,
+            patient_queryInsert.text,
+            patient_queryInsert.values,
         );
+
         return res.status(201);
     } catch (err: any) {
         console.error(err.message);
