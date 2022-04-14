@@ -84,6 +84,20 @@ export const getUserByRole = async (
     }
 };
 
+// Can be called to get users from any role, etc User (Patient), Dentist, or Receptionist
+export const getUserByRole = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  try {
+    const { role } = req.params;
+    const patients = await client.query(`SELECT * FROM public.user WHERE role = '${role}'`);
+    res.json(patients.rows);
+  } catch (err: any) {
+    console.error(err.message);
+  }
+};
+
 // Can be called by anyone to view a patient's records
 export const getRecords = async (
     req: express.Request,
