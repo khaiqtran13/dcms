@@ -1,4 +1,5 @@
 import { Button, FormControl, Paper, TextField } from "@mui/material";
+import axios, { AxiosError } from "axios";
 import React from "react";
 import { IEmployee } from "../../../../server/src/database/user.types";
 
@@ -17,6 +18,7 @@ const AddEmployeeComponent = (props: Props) => {
 
     const [employeeType, setEmployeeType] = React.useState<string>();
     const [salary, setSalary] = React.useState<number>();
+    //const [branchId, setBranchId] = React.useState<number>();
 
     const handleSSN = (event: any) => {
         const re = /^[0-9\b]+$/;
@@ -83,6 +85,15 @@ const AddEmployeeComponent = (props: Props) => {
                 salary: salary,
                 branch_id: 1,
             };
+            axios({
+                method: "POST",
+                url: "http://localhost:8000/api/employee/add",
+                data: {
+                    new_employee: employee,
+                },
+            }).catch((error: AxiosError<string>) => {
+                console.log(error.response?.data);
+            });
             console.log(employee);
         }
     };

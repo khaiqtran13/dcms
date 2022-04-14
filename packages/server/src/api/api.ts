@@ -40,7 +40,7 @@ apiRouter.post("/login", getLogin);
 apiRouter.get("/patients", getPatients);
 
 //employees
-apiRouter.get("/employee/add", addEmployee);
+apiRouter.post("/employee/add", addEmployee);
 
 //records
 apiRouter.get("/records", getRecords);
