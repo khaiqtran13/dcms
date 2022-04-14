@@ -5,10 +5,8 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import { IPatient } from "../../../../server/src/database/user.types";
 
-type Props = {};
-
-const EditPatientComponent: React.FC = (props: any) => {
-    const { patient_id } = props;
+const EditPatientComponent = (props: any) => {
+    const { passedInPID } = props;
 
     const [firstName, setFirstName] = React.useState<string>();
     const [middleName, setMiddleName] = React.useState<string>();
@@ -73,7 +71,7 @@ const EditPatientComponent: React.FC = (props: any) => {
             DOB
         ) {
             const patient: IPatient = {
-                patient_id: patient_id,
+                patient_id: passedInPID,
                 gender: gender,
                 insurance: insurance,
                 email_address: email,

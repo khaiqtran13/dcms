@@ -1,14 +1,8 @@
 import { Button, Dialog } from "@mui/material";
 import React from "react";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import AddEmployeeComponent from "./AddEmployeeComponent";
-import AddPatient from "./AddPatient";
 import AddPatientComponent from "./AddPatientComponent";
-import EditPatient from "./EditPatient";
-import EditPatientComponent from "./EditPatientComponent";
 import { RecepAppointmentComponent } from "./RecepAppointmentComponent";
-import ReceptionistHome from "./ReceptionistHome";
-import SetPatient from "./SetPatient";
 import ViewPatientComponent from "./ViewPatientComponent";
 
 type Props = {};
@@ -19,10 +13,9 @@ const ReceptionistMain = (props: Props) => {
     const [openRA, setOpenRA] = React.useState(false);
 
     return (
-        <BrowserRouter>
+        <div>
             <div className="flex flex-col mx-auto place-content-center space-y-4 h-screen w-96">
                 TODO: make this a drawer or make it prettier idk
-                {/* <EditPatientComponent /> */}
                 <ViewPatientComponent />
                 <Button
                     fullWidth
@@ -76,10 +69,7 @@ const ReceptionistMain = (props: Props) => {
                     <RecepAppointmentComponent />
                 </Dialog>
             </div>
-            <Routes>
-                <Route path="/" element={<ReceptionistHome />}></Route>
-            </Routes>
-        </BrowserRouter>
+        </div>
     );
 };
 
