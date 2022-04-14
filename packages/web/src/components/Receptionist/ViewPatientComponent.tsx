@@ -22,6 +22,7 @@ export default function ViewPatientComponent({}: Props) {
     const [loading, setLoading] = React.useState<boolean>(true);
 
     const [openEP, setOpenEP] = React.useState(false);
+    const [currUID, setCurrUID] = React.useState<number>();
     const [currPID, setCurrPID] = React.useState<number>();
 
     React.useEffect(() => {
@@ -47,6 +48,7 @@ export default function ViewPatientComponent({}: Props) {
             >
                 <EditPatientComponent
                     passedInPID={currPID}
+                    passedInUID={currUID}
                 ></EditPatientComponent>
             </Dialog>
             <TableContainer component={Paper}>
@@ -69,10 +71,11 @@ export default function ViewPatientComponent({}: Props) {
                                             <IconButton
                                                 onClick={() => {
                                                     setOpenEP(true);
-                                                    setCurrPID(p.user_id);
+                                                    setCurrUID(p.user_id);
+                                                    setCurrPID(p.patient_id);
                                                 }}
                                             >
-                                                <EditIcon></EditIcon>
+                                                <EditIcon />
                                             </IconButton>
                                         </TableCell>
                                     </TableRow>
