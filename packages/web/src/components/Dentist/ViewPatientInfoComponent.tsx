@@ -39,7 +39,7 @@ export default function ViewPatientComponent({}: Props) {
     React.useEffect(() => {
         axios({
             method: "GET",
-            url: "http://localhost:8000/api/patients",
+            url: "http://localhost:8000/api/user/role/User",
         })
             .then((response: AxiosResponse) => {
                 setPatientList(response.data);
@@ -147,7 +147,7 @@ export default function ViewPatientComponent({}: Props) {
                 <Table sx={{ maxHeight: 420 }}>
                     <TableHead>
                         <TableRow>
-                            <TableCell align="left">Email</TableCell>
+                            <TableCell align="left">Name</TableCell>
                             <TableCell align="left">User&nbsp;ID</TableCell>
                             <TableCell></TableCell>
                         </TableRow>
@@ -157,7 +157,9 @@ export default function ViewPatientComponent({}: Props) {
                             patientList?.map((p: IPatient) => {
                                 return (
                                     <TableRow>
-                                        <TableCell>{p.email_address}</TableCell>
+                                        <TableCell>
+                                            {p.first_name} {p.last_name}
+                                        </TableCell>
                                         <TableCell>{p.user_id}</TableCell>
                                         <TableCell>
                                             <IconButton
