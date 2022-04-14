@@ -206,30 +206,65 @@ export const editPatient = async (
     res: express.Response,
 ) => {
     try {
-        var curr_user: IPatient = req.body.new_patient;
-        curr_user.role = "User";
+        var patient: IPatient = req.body.new_patient;
+        patient.role = "User";
 
-        const user = await client.query(
-            `UPDATE public.user 
-      SET first_name= ${curr_user.first_name}, 
-      middle_name = ${curr_user.middle_name}, 
-      last_name= ${curr_user.last_name}, 
-      street_address= ${curr_user.street_address}, 
-      city = ${curr_user.city}, 
-      province= ${curr_user.province}, 
-      password = ${curr_user.password}, 
-      role = ${curr_user.role},
-      ssn = ${curr_user.ssn}
-      WHERE user_id = ${curr_user.user_id}`,
+        if (patient.middle_name == "") {
+            patient.middle_name = undefined;
+        }
+
+        const user_queryInsert = {
+            text: `UPDATE public.user SET first_name= $1, middle_name= $2, last_name= $3, street_address= $4, city= $5, province= $6, password= $7, role= $8, ssn= $9 WHERE user_id= $10`,
+            values: [
+                patient.first_name,
+                patient.middle_name,
+                patient.last_name,
+                patient.street_address,
+                patient.city,
+                patient.province,
+                patient.password,
+                patient.role,
+                patient.ssn,
+                patient.user_id,
+            ],
+        };
+
+        const patient_queryInsert = {
+            text: `UPDATE public.patients SET gender= $1, insurance= $2, email_address= $3, date_of_birth= $4  WHERE user_id= $5`,
+            values: [
+                patient.gender,
+                patient.insurance,
+                patient.email_address,
+                patient.date_of_birth,
+                patient.user_id,
+            ],
+        };
+
+        const user_query = await client.query(
+            // `UPDATE public.user
+            // SET first_name= ${curr_user.first_name},
+            // middle_name = ${curr_user.middle_name},
+            // last_name= ${curr_user.last_name},
+            // street_address= ${curr_user.street_address},
+            // city = ${curr_user.city},
+            // province= ${curr_user.province},
+            // password = ${curr_user.password},
+            // role = ${curr_user.role},
+            // ssn = ${curr_user.ssn}
+            // WHERE user_id = ${curr_user.user_id}`,
+            user_queryInsert.text,
+            user_queryInsert.values,
         );
 
-        const patient = await client.query(
-            `UPDATE public.patient
-        SET gender= ${curr_user.gender},
-        insurance = ${curr_user.insurance},
-        email_address = ${curr_user.email_address},
-        date_of_birth = ${curr_user.date_of_birth}
-        WHERE user_id = ${curr_user.user_id}`,
+        const patient_query = await client.query(
+            // `UPDATE public.patient
+            // SET gender= ${curr_user.gender},
+            // insurance = ${curr_user.insurance},
+            // email_address = ${curr_user.email_address},
+            // date_of_birth = ${curr_user.date_of_birth}
+            // WHERE user_id = ${curr_user.user_id}`,
+            patient_queryInsert.text,
+            patient_queryInsert.values,
         );
         return res.status(201);
     } catch (err: any) {

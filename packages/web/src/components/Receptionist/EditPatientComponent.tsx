@@ -48,7 +48,7 @@ const EditPatientComponent = (props: any) => {
             .then((response: AxiosResponse) => {
                 console.log(response.data);
                 setFirstName(response.data.first_name);
-                setLastName(response.data.middle_name);
+                setMiddleName(response.data.middle_name);
                 setLastName(response.data.last_name);
                 setStreetAddress(response.data.street_address);
                 setCity(response.data.city);
@@ -81,7 +81,6 @@ const EditPatientComponent = (props: any) => {
     const validate = () => {
         return !!(
             firstName &&
-            middleName &&
             lastName &&
             streetAddress &&
             city &&
@@ -98,7 +97,6 @@ const EditPatientComponent = (props: any) => {
     const handleSubmit = () => {
         if (
             firstName &&
-            middleName &&
             lastName &&
             streetAddress &&
             city &&
@@ -128,6 +126,15 @@ const EditPatientComponent = (props: any) => {
                 password: password,
                 ssn: SSN,
             };
+            axios({
+                method: "POST",
+                url: "http://localhost:8000/api/user/edit",
+                data: {
+                    new_patient: patient,
+                },
+            }).catch((error: AxiosError<string>) => {
+                console.log(error.response?.data);
+            });
         }
     };
 
