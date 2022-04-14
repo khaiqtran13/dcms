@@ -1,6 +1,6 @@
 import client from "../../connection";
 import express from "express";
-import { IPatient, IUser } from "../database/user.types";
+import { IEmployee, IPatient, IUser } from "../database/user.types";
 import { IAppointment } from "../database/gen.types";
 
 // TODO: express Typing - didn't add TypeScript for shits and giggles
@@ -179,6 +179,40 @@ export const editPatient = async (
         email_address = ${curr_user.email_address},
         date_of_birth = ${curr_user.date_of_birth}
         WHERE user_id = ${curr_user.user_id}`
+    );
+    return res.status(201);
+  } catch (err: any) {
+    console.error(err.message);
+  }
+};
+
+//Adds the user to the database
+export const addEmployee = async (
+  req: express.Request<{
+    new_employee: IEmployee;
+  }>,
+  res: express.Response
+) => {
+  try {
+    var new_user: IEmployee = req.body.new_employee;
+    new_user.role = "User";
+
+    if (new_user.user_id == 0) {
+      let max = 9999999;
+      let min = 1000100;
+      new_user.user_id = Math.floor(Math.random() * (max - min) + min);
+      new_user.employee_id = Math.floor(Math.random() * (max - min) + min);
+    }
+
+    const user = await client.query(
+      `INSERT INTO public.user (user.id, first_name, middle_name, last_name, street_address, city, province, password, role, ssn) 
+      VALUES (${new_user.first_name}, ${new_user.first_name}, ${new_user.middle_name}, ${new_user.last_name}, ${new_user.street_address},
+        ${new_user.city}, ${new_user.province}, ${new_user.password}, ${new_user.role}, ${new_user.ssn} ) `
+    );
+
+    const patient = await client.query(
+      `INSERT INTO public.employee (employee_id, user_id, employee_type, salary, branch_id) 
+        VALUES (${new_user.employee_id}, ${new_user.user_id}, ${new_user.employee_type}, ${new_user.salary}, ${new_user.branch_id} ) `
     );
     return res.status(201);
   } catch (err: any) {

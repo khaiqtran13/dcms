@@ -12,6 +12,7 @@ import {
   getRecords,
   getUserById,
   getUsers,
+  addEmployee,
 } from "../endpoints/endpoints";
 
 const apiRouter = express.Router();
@@ -37,6 +38,9 @@ apiRouter.post("/login", getLogin);
 
 //patients
 apiRouter.get("/patients", getPatients);
+
+//employees
+apiRouter.get("/employee/add", addEmployee);
 
 //records
 apiRouter.get("/records", getRecords);

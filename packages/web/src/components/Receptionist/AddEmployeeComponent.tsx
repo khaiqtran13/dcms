@@ -81,6 +81,7 @@ const AddEmployeeComponent = (props: Props) => {
                 record_id: "", // FK
                 employee_type: employeeType,
                 salary: salary,
+                branch_id: 1,
             };
             console.log(employee);
         }
@@ -179,6 +180,15 @@ const AddEmployeeComponent = (props: Props) => {
                     label="Salary"
                     variant="outlined"
                 />
+                {/* <TextField
+                    value={branchId}
+                    onChange={(event) => {
+                        handleSalary(event);
+                    }}
+                    type="number"
+                    label="Salary"
+                    variant="outlined"
+                /> */}
                 <Button
                     onClick={() => {
                         handleSubmit();
