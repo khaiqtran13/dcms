@@ -293,6 +293,22 @@ export const getPatientObject = async (
         var user_row = user_query.rows[0];
         var patient_row = patient_query.rows[0];
 
+        function quickTimeSanitize(input: any) {
+            try {
+                return input.replace(/[^a-z0-9áéíóúñü \.,_-]/gim, "").trim();
+            } catch {
+                return input;
+            }
+        }
+
+        Object.keys(user_row).forEach((key) => {
+            user_row[key] = quickTimeSanitize(user_row[key]);
+        });
+
+        Object.keys(patient_row).forEach((key) => {
+            patient_row[key] = quickTimeSanitize(patient_row[key]);
+        });
+
         const patient: IPatient = {
             user_id: user_row.user_id,
             first_name: user_row.first_name,
