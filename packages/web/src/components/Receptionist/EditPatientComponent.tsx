@@ -11,7 +11,6 @@ const EditPatientComponent = (props: any) => {
 
     const [loading, setLoading] = React.useState<boolean>(true);
 
-    const [user, setUser] = React.useState<IUser>();
     const [firstName, setFirstName] = React.useState<string>();
     const [middleName, setMiddleName] = React.useState<string>();
     const [lastName, setLastName] = React.useState<string>();
@@ -19,7 +18,6 @@ const EditPatientComponent = (props: any) => {
     const [city, setCity] = React.useState<string>();
     const [province, setProvince] = React.useState<string>();
     const [password, setPassword] = React.useState<string>();
-    const [role, setRole] = React.useState<string>();
     const [SSN, setSSN] = React.useState<number>();
 
     const [gender, setGender] = React.useState<string>();
@@ -43,6 +41,8 @@ const EditPatientComponent = (props: any) => {
     React.useEffect(() => {
         axios({
             method: "GET",
+            // UID broken?
+
             url: `http://localhost:8000/api/user/${passedInUID}`,
         })
             .then((response: AxiosResponse) => {
@@ -54,11 +54,6 @@ const EditPatientComponent = (props: any) => {
                 setCity(response.data.city);
                 setProvince(response.data.province);
                 setPassword(response.data.password);
-                setRole(response.data.role);
-                setSSN(response.data.SSN);
-                // setGender(response.data.gender);
-                // setInsurance(response.data.insurance);
-                // setEmail(response.data.email);
                 setLoading(false);
             })
             .catch((error: AxiosError<string>) => {
@@ -66,22 +61,22 @@ const EditPatientComponent = (props: any) => {
             });
     }, []);
 
-    // React.useEffect(() => {
-    //     axios({
-    //         method: "GET",
-    //         url: `http://localhost:8000/api/user/${passedInUID}`,
-    //     })
-    //         .then((response: AxiosResponse) => {
-    //             console.log(response.data);
-    //             // setGender(response.data.gender);
-    //             // setInsurance(response.data.insurance);
-    //             // setEmail(response.data.email);
-    //             setLoading(false);
-    //         })
-    //         .catch((error: AxiosError<string>) => {
-    //             console.log(error.response?.data);
-    //         });
-    // }, []);
+    React.useEffect(() => {
+        axios({
+            method: "GET",
+            url: `http://localhost:8000/api/patients/object/${passedInPID}`,
+        })
+            .then((response: AxiosResponse) => {
+                console.log("patient", response.data);
+                setGender(response.data.gender);
+                setInsurance(response.data.insurance);
+                setEmail(response.data.email_address);
+                setSSN(Number(response.data.ssn));
+            })
+            .catch((error: AxiosError<string>) => {
+                console.log(error.response?.data);
+            });
+    }, []);
 
     const validate = () => {
         return !!(
@@ -92,7 +87,6 @@ const EditPatientComponent = (props: any) => {
             city &&
             province &&
             password &&
-            role &&
             SSN &&
             gender &&
             insurance &&
@@ -110,7 +104,6 @@ const EditPatientComponent = (props: any) => {
             city &&
             province &&
             password &&
-            role &&
             SSN &&
             gender &&
             insurance &&
@@ -118,7 +111,7 @@ const EditPatientComponent = (props: any) => {
             DOB
         ) {
             const patient: IPatient = {
-                patient_id: passedInUID, //
+                patient_id: passedInUID,
                 gender: gender,
                 insurance: insurance,
                 email_address: email,
@@ -133,7 +126,6 @@ const EditPatientComponent = (props: any) => {
                 city: city,
                 province: province,
                 password: password,
-                role: role,
                 ssn: SSN,
             };
         }
@@ -142,7 +134,7 @@ const EditPatientComponent = (props: any) => {
     return (
         <div>
             <Paper className="w-96 p-8 mx-auto" elevation={8}>
-                <h1 className="text-2xl font-semibold mb-4">Add Patient</h1>
+                <h1 className="text-2xl font-semibold mb-4">Edit Patient</h1>
                 {!loading && (
                     <FormControl fullWidth className="space-y-4">
                         <TextField
@@ -199,14 +191,6 @@ const EditPatientComponent = (props: any) => {
                                 setPassword(event.target.value);
                             }}
                             label="Password"
-                            variant="outlined"
-                        />
-                        <TextField
-                            value={role}
-                            onChange={(event) => {
-                                setRole(event.target.value);
-                            }}
-                            label="Role"
                             variant="outlined"
                         />
                         <TextField
