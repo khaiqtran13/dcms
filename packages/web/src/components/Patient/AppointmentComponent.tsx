@@ -37,6 +37,7 @@ export const AppointmentComponent = (props: Props) => {
     const handleProcChange = (event: SelectChangeEvent) => {
         setProcedure(event.target.value as string);
     };
+
     React.useEffect(() => {
         axios({
             method: "GET",
