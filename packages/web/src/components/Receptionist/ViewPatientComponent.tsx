@@ -1,4 +1,5 @@
 import {
+    IconButton,
     Paper,
     Table,
     TableBody,
@@ -10,6 +11,7 @@ import {
 import axios, { AxiosError, AxiosResponse } from "axios";
 import React from "react";
 import { IPatient } from "../../../../server/src/database/user.types";
+import EditIcon from "@mui/icons-material/Edit";
 
 type Props = {};
 
@@ -38,6 +40,7 @@ export default function ViewPatientComponent({}: Props) {
                         <TableRow>
                             <TableCell align="left">Email</TableCell>
                             <TableCell align="left">User&nbsp;ID</TableCell>
+                            <TableCell></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -46,6 +49,11 @@ export default function ViewPatientComponent({}: Props) {
                                 <TableRow>
                                     <TableCell>{p.email_address}</TableCell>
                                     <TableCell>{p.user_id}</TableCell>
+                                    <TableCell>
+                                        <IconButton>
+                                            <EditIcon></EditIcon>
+                                        </IconButton>
+                                    </TableCell>
                                 </TableRow>
                             );
                         })}

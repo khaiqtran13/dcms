@@ -7,7 +7,9 @@ import { IPatient } from "../../../../server/src/database/user.types";
 
 type Props = {};
 
-const EditPatientComponent: React.FC = ({}: Props) => {
+const EditPatientComponent: React.FC = (props: any) => {
+    const { patient_id } = props;
+
     const [firstName, setFirstName] = React.useState<string>();
     const [middleName, setMiddleName] = React.useState<string>();
     const [lastName, setLastName] = React.useState<string>();
@@ -71,7 +73,7 @@ const EditPatientComponent: React.FC = ({}: Props) => {
             DOB
         ) {
             const patient: IPatient = {
-                patient_id: undefined,
+                patient_id: patient_id,
                 gender: gender,
                 insurance: insurance,
                 email_address: email,
