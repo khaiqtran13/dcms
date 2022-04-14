@@ -68,6 +68,22 @@ export const getPatients = async (
     }
 };
 
+// Can be called to get users from any role, etc User (Patient), Dentist, or Receptionist
+export const getUserByRole = async (
+    req: express.Request,
+    res: express.Response,
+) => {
+    try {
+        const { role } = req.params;
+        const patients = await client.query(
+            `SELECT * FROM public.user WHERE role = '${role}'`,
+        );
+        res.json(patients.rows);
+    } catch (err: any) {
+        console.error(err.message);
+    }
+};
+
 // Can be called by anyone to view a patient's records
 export const getRecords = async (
     req: express.Request,
@@ -316,6 +332,65 @@ export const setAppointment = async (
         );
 
         return res.status(201);
+    } catch (err: any) {
+        console.error(err.message);
+    }
+};
+
+//
+export const getPatientObject = async (
+    req: express.Request,
+    res: express.Response,
+) => {
+    try {
+        const { patient_id } = req.params;
+        const patient_query = await client.query(
+            `SELECT * FROM public.patients WHERE patient_id = ${patient_id}`,
+        );
+
+        const user_query = await client.query(
+            `SELECT * FROM public.user WHERE user_id = ${patient_query.rows[0].user_id}`,
+        );
+
+        var user_row = user_query.rows[0];
+        var patient_row = patient_query.rows[0];
+
+        function quickTimeSanitize(input: any) {
+            try {
+                return input.replace(/[^a-z0-9áéíóúñü \.,_-]/gim, "").trim();
+            } catch {
+                return input;
+            }
+        }
+
+        Object.keys(user_row).forEach((key) => {
+            user_row[key] = quickTimeSanitize(user_row[key]);
+        });
+
+        Object.keys(patient_row).forEach((key) => {
+            patient_row[key] = quickTimeSanitize(patient_row[key]);
+        });
+
+        const patient: IPatient = {
+            user_id: user_row.user_id,
+            first_name: user_row.first_name,
+            middle_name: user_row.middle_name,
+            last_name: user_row.last_name,
+            city: user_row.city,
+            street_address: user_row.street_address,
+            province: user_row.province,
+            password: user_row.password,
+            role: user_row.role,
+            ssn: user_row.ssn,
+            patient_id: patient_row.patient_id,
+            gender: patient_row.gender,
+            insurance: patient_row.insurance,
+            email_address: patient_row.email_address,
+            date_of_birth: patient_row.date_of_birth,
+            payment_id: patient_row.payment_id,
+            record_id: patient_row.record_id,
+        };
+        return res.status(200).json(patient);
     } catch (err: any) {
         console.error(err.message);
     }

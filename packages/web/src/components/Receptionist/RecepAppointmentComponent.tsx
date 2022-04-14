@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import { IAppointment } from "../../../../server/src/database/gen.types";
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { IUser } from "../../../../server/src/database/user.types";
+import { IPatient, IUser } from "../../../../server/src/database/user.types";
 import { AppContext, IAppContext } from "../../AppContext";
 
 type Props = {};
@@ -28,7 +28,8 @@ export const RecepAppointmentComponent = (props: Props) => {
     const [selectedUserID, setSelectedUserID] = React.useState<number>();
 
     const [dentists, setDentists] = React.useState<IUser[]>();
-    const [users, setUsers] = React.useState<IUser[]>();
+    //const [users, setUsers] = React.useState<IUser[]>();
+    const [patients, setPatients] = React.useState<IUser[]>();
 
     const context: IAppContext | null = React.useContext(AppContext);
 
@@ -40,14 +41,28 @@ export const RecepAppointmentComponent = (props: Props) => {
         setProcedure(event.target.value as string);
     };
 
+    // React.useEffect(() => {
+    //     axios({
+    //         method: "GET",
+    //         url: "http://localhost:8000/api/user",
+    //     })
+    //         .then((response: AxiosResponse) => {
+    //             const fetchedUsers = response.data;
+    //             setUsers(fetchedUsers);
+    //         })
+    //         .catch((error: AxiosError<string>) => {
+    //             console.log(error.response?.data);
+    //         });
+    // }, []);
+
     React.useEffect(() => {
         axios({
             method: "GET",
-            url: "http://localhost:8000/api/user",
+            url: "http://localhost:8000/api/user/role/User",
         })
             .then((response: AxiosResponse) => {
-                const fetchedUsers = response.data;
-                setUsers(fetchedUsers);
+                const fetchedPatients = response.data;
+                setPatients(fetchedPatients);
             })
             .catch((error: AxiosError<string>) => {
                 console.log(error.response?.data);
@@ -145,7 +160,7 @@ export const RecepAppointmentComponent = (props: Props) => {
                                 setSelectedUserID(Number(event.target.value));
                             }}
                         >
-                            {users?.map((u) => {
+                            {patients?.map((u) => {
                                 return (
                                     <MenuItem value={u.user_id}>
                                         {u.first_name} {u.last_name}
