@@ -12,6 +12,7 @@ import {
   getRecords,
   getUserById,
   getUsers,
+  getUserByRole,
 } from "../endpoints/endpoints";
 
 const apiRouter = express.Router();
@@ -31,6 +32,7 @@ apiRouter.get("/user/dentists", getDentists);
 apiRouter.post("/user/add", addPatient);
 apiRouter.post("/user/edit/:user_id", editPatient);
 apiRouter.get("/user/:user_id", getUserById);
+apiRouter.get("/user/role/:role", getUserByRole)
 
 // login
 apiRouter.post("/login", getLogin);
