@@ -128,7 +128,7 @@ export const getAppointments = async (
     }
 };
 
-//Adds the user to the database
+//Adds a patient to the DB
 export const addPatient = async (
     req: express.Request<{
         new_patient: IPatient;
@@ -177,17 +177,11 @@ export const addPatient = async (
         };
 
         const user_query = await client.query(
-            //         `INSERT INTO public.user (user_id, first_name, middle_name, last_name, street_address, city, province, password, role, ssn)
-            //   VALUES (${new_user.first_name}, ${new_user.first_name}, ${new_user.middle_name}, ${new_user.last_name}, ${new_user.street_address},
-            //     ${new_user.city}, ${new_user.province}, ${new_user.password}, ${new_user.role}, ${new_user.ssn} ) `,
             user_queryInsert.text,
             user_queryInsert.values,
         );
 
         const patient_query = await client.query(
-            //     `INSERT INTO public.patients (patient_id, gender, insurance, email_address, date_of_birth, payment_id, record_id, user_id)
-            // VALUES (${new_user.patient_id}, ${new_user.gender}, ${new_user.insurance}, ${new_user.email_address}, ${new_user.date_of_birth},
-            //     ${new_user.payment_id}, ${new_user.record_id}, ${new_user.user_id} ) `,
             patient_queryInsert.text,
             patient_queryInsert.values,
         );
@@ -198,7 +192,7 @@ export const addPatient = async (
     }
 };
 
-//Edits a patient
+//Edits a patient on the DB
 export const editPatient = async (
     req: express.Request<{
         new_patient: IPatient;
@@ -241,28 +235,11 @@ export const editPatient = async (
         };
 
         const user_query = await client.query(
-            // `UPDATE public.user
-            // SET first_name= ${curr_user.first_name},
-            // middle_name = ${curr_user.middle_name},
-            // last_name= ${curr_user.last_name},
-            // street_address= ${curr_user.street_address},
-            // city = ${curr_user.city},
-            // province= ${curr_user.province},
-            // password = ${curr_user.password},
-            // role = ${curr_user.role},
-            // ssn = ${curr_user.ssn}
-            // WHERE user_id = ${curr_user.user_id}`,
             user_queryInsert.text,
             user_queryInsert.values,
         );
 
         const patient_query = await client.query(
-            // `UPDATE public.patient
-            // SET gender= ${curr_user.gender},
-            // insurance = ${curr_user.insurance},
-            // email_address = ${curr_user.email_address},
-            // date_of_birth = ${curr_user.date_of_birth}
-            // WHERE user_id = ${curr_user.user_id}`,
             patient_queryInsert.text,
             patient_queryInsert.values,
         );
@@ -272,7 +249,7 @@ export const editPatient = async (
     }
 };
 
-//Gets a list of all the dentists
+//Gets a list of all the dentists in user table
 export const getDentists = async (
     req: express.Request,
     res: express.Response,
@@ -337,7 +314,6 @@ export const setAppointment = async (
 
         appointment.fee_id = "6";
 
-        // console.log(appointment);
         const queryInsert = {
             text: `INSERT INTO public.appointments (date, duration, status, appointment_type, appointment_id, dentist_id, patient_id, fee_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
             values: [
@@ -352,16 +328,7 @@ export const setAppointment = async (
             ],
         };
 
-        // console.log(appointment.appointment_type);
-
         const appointment_insert = await client.query(
-            // `INSERT INTO public.appointments (fee_id, patient_id, dentist_id, cancel_date, date, duration, appointment_type, status, appointment_id, procedure_id)
-            // VALUES (${appointment.fee_id}, ${appointment.patient_id}, ${appointment.dentist_id}, ${appointment.cancel_date}, ${appointment.date}, ${appointment.duration},
-            //   ${appointment.appointment_type}, ${appointment.status},${appointment.appointment_id}, ${appointment.procedure_id})`,
-
-            // `INSERT INTO public.appointments (date, duration, status, appointment_type, appointment_id, dentist_id, patient_id)
-            // VALUES ('${appointment.date}', '${appointment.duration}', '${appointment.status}', ${appointment.appointment_type}::TEXT[], '${appointment.appointment_id}',
-            //   '${appointment.dentist_id}', '${appointment.patient_id}')`,
             queryInsert.text,
             queryInsert.values,
         );
@@ -372,7 +339,7 @@ export const setAppointment = async (
     }
 };
 
-//
+//gets IPatient object from a patient ID
 export const getPatientObject = async (
     req: express.Request,
     res: express.Response,
