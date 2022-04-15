@@ -20,7 +20,6 @@ const Homepage = (props: Props) => {
     return (
         <div className="h-full">
             <TopAppBar userRole={role}></TopAppBar>
-            {/* <div>Logged in as {context?.user?.role}</div> */}
             {
                 {
                     User: <PatientMain />,

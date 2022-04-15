@@ -1,18 +1,14 @@
-import React from 'react'
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import DentistHome from './DentistHome';
+import React from "react";
+import ViewPatientInfoComponent from "./ViewPatientInfoComponent";
 
-type Props = {}
+type Props = {};
 
 const DentistMain = (props: Props) => {
-  return (
-    <BrowserRouter>
-      <Routes>
-          <Route path="/" element={<DentistHome/>} ></Route>
-          <Route path="*" element={<Navigate to="/" replace />}/>
-      </Routes>
-    </BrowserRouter>
-  )
-}
+    return (
+        <div className="flex flex-col mx-auto place-content-center space-y-4 h-screen w-96">
+            <ViewPatientInfoComponent />
+        </div>
+    );
+};
 
 export default DentistMain;

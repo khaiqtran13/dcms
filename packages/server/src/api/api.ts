@@ -1,18 +1,20 @@
 import express from "express";
 import {
-  addPatient,
-  editPatient,
-  setAppointment,
-  getAppointmentByPatientId,
-  getAppointments,
-  getDentists,
-  getLogin,
-  getPatientRecordById,
-  getPatients,
-  getRecords,
-  getUserById,
-  getUsers,
-  addEmployee,
+    addPatient,
+    editPatient,
+    setAppointment,
+    getAppointmentByPatientId,
+    getAppointments,
+    getDentists,
+    getLogin,
+    getPatientRecordById,
+    getPatients,
+    getRecords,
+    getUserById,
+    getUsers,
+    getUserByRole,
+    getPatientObject,
+    addEmployee,
 } from "../endpoints/endpoints";
 
 const apiRouter = express.Router();
@@ -32,12 +34,14 @@ apiRouter.get("/user/dentists", getDentists);
 apiRouter.post("/user/add", addPatient);
 apiRouter.post("/user/edit/:user_id", editPatient);
 apiRouter.get("/user/:user_id", getUserById);
+apiRouter.get("/user/role/:role", getUserByRole);
 
 // login
 apiRouter.post("/login", getLogin);
 
 //patients
 apiRouter.get("/patients", getPatients);
+apiRouter.get("/patients/object/:patient_id", getPatientObject);
 
 //employees
 apiRouter.post("/employee/add", addEmployee);
