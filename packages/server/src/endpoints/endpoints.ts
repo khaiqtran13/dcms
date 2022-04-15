@@ -1,6 +1,6 @@
 import client from "../../connection";
 import express from "express";
-import { IPatient, IUser } from "../database/user.types";
+import { IEmployee, IPatient, IUser } from "../database/user.types";
 import { IAppointment } from "../database/gen.types";
 
 // TODO: express Typing - didn't add TypeScript for shits and giggles
@@ -249,7 +249,73 @@ export const editPatient = async (
     }
 };
 
-//Gets a list of all the dentists in user table
+//Adds the user to the database
+export const addEmployee = async (
+    req: express.Request<{
+        new_employee: IEmployee;
+    }>,
+    res: express.Response,
+) => {
+    try {
+        var user: IEmployee = req.body.new_employee;
+        //user.role = "User";
+
+        if (user.user_id == 0) {
+            let max = 9999999;
+            let min = 1000100;
+            user.user_id = Math.floor(Math.random() * (max - min) + min);
+            user.employee_id = Math.floor(Math.random() * (max - min) + min);
+        }
+
+        const user_queryInsert = {
+            text: `INSERT INTO public.user (user_id, first_name, middle_name, last_name, street_address, city, province, password, role, ssn) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
+            values: [
+                user.user_id,
+                user.first_name,
+                user.middle_name,
+                user.last_name,
+                user.street_address,
+                user.city,
+                user.province,
+                user.password,
+                user.role,
+                user.ssn,
+            ],
+        };
+
+        const employee_queryInsert = {
+            text: `INSERT INTO public.employee (employee_id, user_id, employee_type, salary, branch_id) VALUES ($1, $2, $3, $4, $5)`,
+            values: [
+                user.employee_id,
+                user.user_id,
+                user.employee_type,
+                user.salary,
+                user.branch_id,
+            ],
+        };
+
+        const user_query = await client.query(
+            //         `INSERT INTO public.user (user_id, first_name, middle_name, last_name, street_address, city, province, password, role, ssn)
+            //   VALUES (${new_user.first_name}, ${new_user.first_name}, ${new_user.middle_name}, ${new_user.last_name}, ${new_user.street_address},
+            //     ${new_user.city}, ${new_user.province}, ${new_user.password}, ${new_user.role}, ${new_user.ssn} ) `,
+            user_queryInsert.text,
+            user_queryInsert.values,
+        );
+
+        const employee_query = await client.query(
+            //     `INSERT INTO public.employee (employee_id, user_id, employee_type, salary, branch_id)
+            // VALUES (${new_user.employee_id}, ${new_user.user_id}, ${new_user.employee_type}, ${new_user.salary}, ${new_user.branch_id} ) `,
+            employee_queryInsert.text,
+            employee_queryInsert.values,
+        );
+
+        return res.status(201);
+    } catch (err: any) {
+        console.error(err.message);
+    }
+};
+
+//Gets a list of all the dentists
 export const getDentists = async (
     req: express.Request,
     res: express.Response,

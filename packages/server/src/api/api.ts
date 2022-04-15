@@ -14,6 +14,7 @@ import {
     getUsers,
     getUserByRole,
     getPatientObject,
+    addEmployee,
 } from "../endpoints/endpoints";
 
 const apiRouter = express.Router();
@@ -41,6 +42,9 @@ apiRouter.post("/login", getLogin);
 //patients
 apiRouter.get("/patients", getPatients);
 apiRouter.get("/patients/object/:patient_id", getPatientObject);
+
+//employees
+apiRouter.post("/employee/add", addEmployee);
 
 //records
 apiRouter.get("/records", getRecords);
