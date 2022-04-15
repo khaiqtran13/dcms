@@ -32,7 +32,7 @@ apiRouter.get("/", (req: any, res: any) => res.send(req));
 apiRouter.get("/user", getUsers);
 apiRouter.get("/user/dentists", getDentists);
 apiRouter.post("/user/add", addPatient);
-apiRouter.post("/user/edit/:user_id", editPatient);
+apiRouter.post("/user/edit", editPatient);
 apiRouter.get("/user/:user_id", getUserById);
 apiRouter.get("/user/role/:role", getUserByRole);
 

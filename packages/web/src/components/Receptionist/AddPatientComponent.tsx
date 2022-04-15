@@ -4,6 +4,7 @@ import React from "react";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import { IPatient } from "../../../../server/src/database/user.types";
+import axios, { AxiosError } from "axios";
 
 type Props = {};
 
@@ -89,6 +90,15 @@ const AddPatientComponent: React.FC = ({}: Props) => {
                 role: role,
                 ssn: SSN,
             };
+            axios({
+                method: "POST",
+                url: "http://localhost:8000/api/user/add",
+                data: {
+                    new_patient: patient,
+                },
+            }).catch((error: AxiosError<string>) => {
+                console.log(error.response?.data);
+            });
             console.log(patient);
         }
     };

@@ -70,11 +70,11 @@ export const AppointmentComponent = (props: Props) => {
                 dentist_id: selectedDentistID,
             };
             axios({
-                method: "GET",
-                url: "",
+                method: "POST",
+                url: "http://localhost:8000/api/appointments/set/",
                 data: {
                     appointment: appointment,
-                    uesr_id: context?.user.user_id,
+                    user_id: context?.user.user_id,
                 },
             }).catch((error: AxiosError<string>) => {
                 console.log(error.response?.data);

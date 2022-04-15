@@ -100,11 +100,11 @@ export const RecepAppointmentComponent = (props: Props) => {
                 dentist_id: selectedDentistID,
             };
             axios({
-                method: "GET",
-                url: "",
+                method: "POST",
+                url: "http://localhost:8000/api/appointments/set/",
                 data: {
                     appointment: appointment,
-                    uesr_id: selectedUserID,
+                    user_id: selectedUserID,
                 },
             }).catch((error: AxiosError<string>) => {
                 console.log(error.response?.data);
