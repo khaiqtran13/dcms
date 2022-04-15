@@ -15,7 +15,6 @@ const ReceptionistMain = (props: Props) => {
     return (
         <div>
             <div className="flex flex-col mx-auto place-content-center space-y-4 h-screen w-96">
-                TODO: make this a drawer or make it prettier idk
                 <ViewPatientComponent />
                 <Button
                     fullWidth

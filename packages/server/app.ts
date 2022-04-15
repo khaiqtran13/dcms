@@ -11,8 +11,6 @@ app.use(cors());
 app.options("http://localhost:3000", cors());
 app.use(express.json());
 
-// TODO: use this properly
-// app.use(bodyParser.json());
 
 app.listen(8000, () => {
     console.log("Server is now listening on port 8000");
