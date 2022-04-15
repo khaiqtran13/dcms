@@ -16,6 +16,7 @@ export interface IEmployee extends IUser {
   record_id: string; // FK
   employee_type: string;
   salary: number;
+  branch_id: number;
 }
 
 export interface IPatient extends IUser {
