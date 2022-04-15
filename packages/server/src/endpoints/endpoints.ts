@@ -3,18 +3,6 @@ import express from "express";
 import { IEmployee, IPatient, IUser } from "../database/user.types";
 import { IAppointment } from "../database/gen.types";
 
-// TODO: express Typing - didn't add TypeScript for shits and giggles
-
-/* 
-ideally we want to just use the SQL scripts instead of posting
-to the server page 
-honestly it doesn't really matter because fuck security 
-but 100% printing to the page is not needed 
-you can simply make these functions with SQL logic 
-unless your a JT/TS god and want to parse JSON instead of using SQL
-what're chances the prof checks
-*/
-
 //Gets all users
 export const getUsers = async (req: express.Request, res: express.Response) => {
     try {
