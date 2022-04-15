@@ -16,7 +16,6 @@ const AddPatientComponent: React.FC = ({}: Props) => {
     const [city, setCity] = React.useState<string>();
     const [province, setProvince] = React.useState<string>();
     const [password, setPassword] = React.useState<string>();
-    const [role, setRole] = React.useState<string>();
     const [SSN, setSSN] = React.useState<number>();
 
     const [gender, setGender] = React.useState<string>();
@@ -46,7 +45,6 @@ const AddPatientComponent: React.FC = ({}: Props) => {
             city &&
             province &&
             password &&
-            role &&
             SSN &&
             gender &&
             insurance &&
@@ -64,7 +62,6 @@ const AddPatientComponent: React.FC = ({}: Props) => {
             city &&
             province &&
             password &&
-            role &&
             SSN &&
             gender &&
             insurance &&
@@ -87,7 +84,7 @@ const AddPatientComponent: React.FC = ({}: Props) => {
                 city: city,
                 province: province,
                 password: password,
-                role: role,
+                role: undefined,
                 ssn: SSN,
             };
             axios({
@@ -162,14 +159,6 @@ const AddPatientComponent: React.FC = ({}: Props) => {
                             setPassword(event.target.value);
                         }}
                         label="Password"
-                        variant="outlined"
-                    />
-                    <TextField
-                        value={role}
-                        onChange={(event) => {
-                            setRole(event.target.value);
-                        }}
-                        label="Role"
                         variant="outlined"
                     />
                     <TextField
