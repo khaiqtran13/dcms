@@ -1,3 +1,2 @@
-# chasing that bag 🤑
+# DCMS Database Application
 
-## Powered by ARAM breaks
